@@ -49,10 +49,10 @@ nav a:hover{opacity:1}
 .sparkle:before,.sparkle:after{content:"";position:absolute;inset:0;margin:auto;border-radius:2px;background:var(--c-white)}
 .sparkle:before{width:2px;height:18px}
 .sparkle:after{width:18px;height:2px}
-.hero-right{min-height:92vh;background-image:url('/images/photohero.jpeg');background-size:cover;background-position:center;background-attachment:fixed}
+.hero-right{min-height:92vh;background-image:url('images/photohero.jpeg');background-size:cover;background-position:center;background-attachment:fixed}
 /* Section 1 */
 #s1{display:grid;grid-template-columns:1fr 1fr}
-.s1-img{background-image:url('/images/photosection1.heic');background-size:cover;background-position:center;background-attachment:fixed;min-height:70vh}
+.s1-img{background-image:url('images/photosection1.heic');background-size:cover;background-position:center;background-attachment:fixed;min-height:70vh}
 .s1-text{background:var(--c-hero);padding:80px 6vw;display:flex;flex-direction:column;justify-content:center}
 .underline{ text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 3px; }
 .s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.1;margin:0 0 28px 0;color:#000}
@@ -65,7 +65,7 @@ nav a:hover{opacity:1}
 .s2-arrow{width:64px;height:24px;display:inline-block}
 .s2-arrow svg{width:28px;height:28px;fill:none;stroke:var(--c-white);stroke-width:3}
 @keyframes wiggle{0%,100%{transform:translateX(0)}50%{transform:translateX(10px)}}
-.s2-photo{height:56vh;background-image:url('/images/photosection2.jpg');background-size:cover;background-position:center;background-attachment:fixed}
+.s2-photo{height:56vh;background-image:url('images/photosection2.jpg');background-size:cover;background-position:center;background-attachment:fixed}
 /* Section 3 — Carte */
 #carte{background:var(--c-deep);color:var(--c-white);padding:100px 0}
 .carte-head{display:flex;align-items:center;gap:24px;margin-bottom:36px}
@@ -113,7 +113,7 @@ nav a:hover{opacity:1}
 .u-white{color:#fff}
 .u-hero{color:var(--c-hero)}
 /* Responsive */
-@media (max-width:1100px){#hero{grid-template-columns:1fr} .hero-right{display:none} .s1-img{min-height:40vh} .s2-photo{height:44vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}} .hero-right{display:none} .s1-img{min-height:40vh;background-attachment:scroll} .s2-photo{background-attachment:scroll;height:44vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}}
+@media (max-width:1100px){#hero{grid-template-columns:1fr}.s2-photo{height:44vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}} .hero-right{display:none} .s1-img{min-height:40vh;background-attachment:scroll} .s2-photo{background-attachment:scroll;height:44vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}}
 @media (max-width:720px){.site-header{height:64px} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}}
 .star{width:18px;height:18px;display:inline-block;object-fit:contain;vertical-align:middle}
 </style>
@@ -123,9 +123,9 @@ nav a:hover{opacity:1}
   <div class="container" style="display:flex;align-items:center;gap:22px">
     <a class="brand" href="#hero" aria-label="Accueil La Solina">
       <!-- Logo dark (texte foncé) visible en haut de page -->
-      <img class="logo-dark" src="/images/logo-dark.jpeg" alt="La Solina" />
+      <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina" />
       <!-- Logo light (texte clair) visible après scroll -->
-      <img class="logo-light" src="/images/logo-light.png" alt="La Solina" />
+      <img class="logo-light" src="images/logo-light.png" alt="La Solina" />
     </a>
     <nav>
       <a href="#hero">Accueil</a>
@@ -142,7 +142,7 @@ nav a:hover{opacity:1}
   <div class="hero-left">
     <h1 class="hero-title">FRAÎCHE, ARTISANALE, PRÉPARÉE<br/>POUR VOUS</h1>
     <div class="hero-cta">
-      <a class="btn" href="#carte"><img class="star" src="/images/star-white.webp" alt=""> Notre carte</a>
+      <a class="btn" href="#carte"><img class="star" src="images/star-white.webp" alt=""> Notre carte</a>
     </div>
   </div>
   <div class="hero-right parallax" aria-hidden="true"></div>
@@ -153,7 +153,7 @@ nav a:hover{opacity:1}
   <div class="s1-img parallax" aria-hidden="true"></div>
   <div class="s1-text">
     <h2 class="s1-title">UNE PÂTE <span class="underline">MAISON</span>, DES PRODUITS <span class="underline">FRAIS</span>, UNE CUISSON <span class="underline">SOIGNÉE</span>, RIEN DE <span class="underline">PLUS</span>, RIEN DE <span style="color:var(--c-accent)" class="underline">MOINS</span></h2>
-    <a class="btn" href="#carte"><img class="star" src="/images/star-white.webp" alt=""> Notre carte</a>
+    <a class="btn" href="#carte"><img class="star" src="images/star-white.webp" alt=""> Notre carte</a>
   </div>
 </section>
 
@@ -166,7 +166,7 @@ nav a:hover{opacity:1}
         <path d="M2 12 H58" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
         <path d="M46 3 L62 12 L46 21" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <a class="btn btn-outline" href="carte.html"><img class="star" src="/images/star-white.webp" alt=""> Nos Distributeurs</a>
+      <a class="btn btn-outline" href="carte.html"><img class="star" src="images/star-white.webp" alt=""> Nos Distributeurs</a>
     </div>
   </div>
   <div class="s2-photo parallax" aria-hidden="true"></div>
@@ -177,7 +177,7 @@ nav a:hover{opacity:1}
   <div class="container">
     <div class="carte-head">
       <h2>NOTRE CARTE</h2>
-      <a class="btn call" href="tel:+33562517017"><img class="star" src="/images/star-white.webp" alt=""> Commander</a>
+      <a class="btn call" href="tel:+33562517017"><img class="star" src="images/star-white.webp" alt=""> Commander</a>
     </div>
 
     <div class="tabs" id="tabs">
@@ -225,7 +225,7 @@ nav a:hover{opacity:1}
       <a href="tel:+33562517017">Prendre contact</a>
     </div>
     <div class="brand-center">
-      <img src="/images/logo-light.png" alt="La Solina" style="max-width:260px;opacity:.95" />
+      <img src="images/logo-light.png" alt="La Solina" style="max-width:260px;opacity:.95" />
     </div>
     <div class="socials">
       <a aria-label="Instagram" href="https://www.instagram.com/lasolina_pizzas/" target="_blank" rel="noopener">IG</a>
@@ -279,12 +279,5 @@ function parallaxTick(){const y=window.scrollY*0.2;PARALLAX.forEach(el=>{el.styl
 window.addEventListener('scroll',parallaxTick,{passive:true});parallaxTick();
 </script>
 
-<!-- TODO IMAGES
-/images/logo-dark.svg  (logo fond transparent + texte foncé)
-/images/logo-light.svg (logo fond foncé + texte clair)
-/images/photohero.jpg (image verticale héro droite)
-/images/photosection1.jpg (photo section 1 gauche)
-/images/photosection2.jpg (photo section 2 bas)
--->
 </body>
 </html>

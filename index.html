@@ -39,10 +39,10 @@ nav a:hover{opacity:1}
 .site-header.scrolled .logo-dark{display:none}
 .site-header.scrolled .logo-light{display:block}
 /* Hero */
-#hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr}
-.hero-title{font-family:var(--ff-title);font-weight:900;letter-spacing:.02em;line-height:1.05;margin:0 0 24px 0;font-size:var(--h1);color:#000}
+#hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr} .hero-left{background:var(--c-hero);padding:120px 8vw 80px;display:flex;flex-direction:column;justify-content:center}
+.hero-title{font-family:var(--ff-title);font-weight:900;letter-spacing:.02em;line-height:1.1;margin:0 0 24px 0;font-size:var(--h1);color:#000}
 .hero-cta{display:flex;align-items:center;gap:16px;margin-top:24px}
-.btn{display:inline-flex;align-items:center;gap:10px;background:var(--c-accent);color:var(--c-white);border:2px solid #000;border-radius:999px;padding:14px 22px;font-weight:800;text-decoration:none;box-shadow:0 6px 0 rgba(0,0,0,.25);transition:transform .1s ease,box-shadow .1s ease;font-family:var(--ff-btn)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--c-accent);color:var(--c-white);border:2px solid #000;border-radius:999px;padding:14px 22px;font-weight:800;text-decoration:none;box-shadow:0 6px 0 rgba(0,0,0,.25);transition:transform .1s ease,box-shadow .1s ease;font-family:var(--ff-btn);width:auto;max-width:max-content}
 .btn:hover{transform:translateY(-1px);box-shadow:0 8px 0 rgba(0,0,0,.25)}
 .btn-outline{background:transparent;color:var(--c-white);border-color:var(--c-white)}
 .sparkle{width:18px;height:18px;border-radius:999px;background:var(--c-white);position:relative;box-shadow:0 0 0 2px var(--c-white) inset}
@@ -54,8 +54,8 @@ nav a:hover{opacity:1}
 #s1{display:grid;grid-template-columns:1fr 1fr}
 .s1-img{background-image:url('/images/photosection1.heic');background-size:cover;background-position:center;background-attachment:fixed;min-height:70vh}
 .s1-text{background:var(--c-hero);padding:80px 6vw;display:flex;flex-direction:column;justify-content:center}
-.underline{ text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 2px; }
-.s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.08;margin:0 0 28px 0;color:#000}
+.underline{ text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 3px; }
+.s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.1;margin:0 0 28px 0;color:#000}
 /* Section 2 */
 #s2{background:var(--c-deep);color:var(--c-white)}
 .s2-bar{padding:80px 6vw 24px 6vw;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:24px}
@@ -77,8 +77,8 @@ nav a:hover{opacity:1}
 /* vue immuable: zone fixe + scroll interne */
 .carte-viewport{height:520px;border-top:1px solid #fff2;border-bottom:1px solid #fff2;overflow:auto;padding:12px 2px}
 .pizza-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;padding:18px 2px}
-.pizza h3{margin:0 0 6px 0;color:#d1f3ff;letter-spacing:.02em;font-family:var(--ff-pizza)}
-.pizza .price{color:var(--c-red2);font-weight:900;font-family:var(--ff-price)}
+.pizza h3{margin:0 0 6px 0;color:#d1f3ff;letter-spacing:.02em;font-family:var(--ff-pizza);display:flex;justify-content:space-between;align-items:baseline}
+.pizza .price{color:var(--c-red2);font-weight:900;font-family:var(--ff-price);margin-left:12px}
 .pizza p{margin:8px 0 0 0;color:#fff;opacity:.9;font-family:var(--ff-body)}
 .hr{height:1px;background:#fff;margin:12px 0;opacity:.35}
 /* Section 4 — FAQ */
@@ -90,8 +90,8 @@ nav a:hover{opacity:1}
 .faq-list,.faq-panel{height:520px;overflow:auto}
 .faq-item{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:2px solid #fff}
 .faq-q{font-weight:800;font-family:var(--ff-body)}
-.faq-toggle{width:28px;height:28px;border:2px solid #fff;border-radius:6px;display:grid;place-items:center;cursor:pointer;font-size:18px;line-height:1}
-.faq-toggle:before{content:"⌄";color:#fff}
+.faq-toggle{width:28px;height:28px;border:none;background:transparent;display:grid;place-items:center;cursor:pointer;font-size:22px;line-height:1} 
+.faq-toggle::before{content:"⌄";color:#fff} 
 .faq-panel{display:none;padding:22px}
 .faq-panel.active{display:block}
 .faq-back{position:absolute;top:12px;right:12px}
@@ -99,14 +99,14 @@ nav a:hover{opacity:1}
 #contact{background:var(--c-deep);color:#fff;padding:90px 0}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:center}
 .contact-grid h2{grid-column:1/-1;text-align:center;margin:0 0 12px 0;font-family:var(--ff-title);font-size:var(--h2);color:#e3f3ff}
-.contact-bar{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:10px 0 30px}
+.contact-bar{display:grid;grid-template-columns:1fr;gap:12px;margin:10px 0 30px;justify-items:center} .contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700}
 .contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;justify-self:center}
 .contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;justify-self:center}
 .contact-links{display:flex;flex-direction:column;gap:18px}
 .contact-links a{text-decoration:underline;color:#fff;font-weight:800}
 .brand-center{display:grid;place-items:center}
 .socials{display:flex;gap:12px;justify-content:flex-end}
-.socials a{width:44px;height:44px;border-radius:10px;background:var(--c-deep);display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900;border:2px solid #fff}
+.socials a{width:44px;height:44px;border-radius:10px;background:transparent;display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900;border:none}
 .footer-small{margin-top:36px;text-align:center;opacity:.9}
 .footer-small a{color:#fff}
 /* Utilities */
@@ -142,7 +142,7 @@ nav a:hover{opacity:1}
   <div class="hero-left">
     <h1 class="hero-title">FRAÎCHE, ARTISANALE, PRÉPARÉE<br/>POUR VOUS</h1>
     <div class="hero-cta">
-      <a class="btn" href="#carte"><img class="star" src="/images/star-white.png" alt=""> Notre carte</a>
+      <a class="btn" href="#carte"><img class="star" src="/images/star-white.webp" alt=""> Notre carte</a>
     </div>
   </div>
   <div class="hero-right" aria-hidden="true"></div>
@@ -225,7 +225,7 @@ nav a:hover{opacity:1}
       <a href="tel:+33562517017">Prendre contact</a>
     </div>
     <div class="brand-center">
-      <img src="/images/logo-light.svg" alt="La Solina" style="max-width:260px;opacity:.95" />
+      <img src="/images/logo-light.png" alt="La Solina" style="max-width:260px;opacity:.95" />
     </div>
     <div class="socials">
       <a aria-label="Instagram" href="https://www.instagram.com/lasolina_pizzas/" target="_blank" rel="noopener">IG</a>
@@ -274,13 +274,5 @@ faqBack.addEventListener('click',()=>{faqPanel.classList.remove('active');faqLis
 /* ===== Smooth scroll anchors ===== */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el)return;e.preventDefault();window.scrollTo({top:el.offsetTop-64,behavior:'smooth'})})});
 </script>
-
-<!-- TODO IMAGES
-/images/logo-dark.svg  (logo fond transparent + texte foncé)
-/images/logo-light.svg (logo fond foncé + texte clair)
-/images/photohero.jpg (image verticale héro droite)
-/images/photosection1.jpg (photo section 1 gauche)
-/images/photosection2.jpg (photo section 2 bas)
--->
 </body>
 </html>

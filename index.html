@@ -50,11 +50,11 @@ nav a:hover{opacity:1}
 .s1-img{background-image:url('images/photosection1.heic');background-size:cover;background-position:center;background-attachment:fixed;min-height:90vh}
 .underline{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:3px}
 .s1-text{background:var(--c-hero);padding:80px 6vw;display:flex;flex-direction:column;justify-content:center}
-.s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.1;margin:0 0 28px 0;color:#000}
+.s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.2;margin:0 0 28px 0;color:#000} #s1 .btn{align-self:flex-end;} 
 /* Section 2 */
 #s2{background:var(--c-deep);color:var(--c-white)}
-.s2-bar{padding:48px 6vw 12px 6vw;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:24px}
-.s2-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.08;margin:0}
+.s2-bar{padding:36px 6vw;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:24px;min-height:180px} 
+.s2-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.12;margin:0} 
 .s2-title .frais{color:var(--c-hero)}
 .s2-cta{justify-self:end}
 .s2-arrow{width:64px;height:24px;display:inline-block}
@@ -84,15 +84,17 @@ nav a:hover{opacity:1}
 .faq-q{font-weight:800;font-family:var(--ff-body)}
 .faq-toggle{width:28px;height:28px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;line-height:1}
 .faq-toggle::before{content:"⌄";color:#fff;display:block;line-height:1}
-.faq-panel{display:none;padding:22px}
-.faq-panel.active{display:block}
-.faq-back{position:absolute;top:12px;right:12px}
+/* plein cadre quand ouvert */
+.faq-panel{position:absolute;inset:0;display:none;padding:28px;background:rgba(14,46,66,.92)}
+.faq-area.open .faq-list{visibility:hidden}
+.faq-area.open .faq-panel{display:block}
+.faq-back{position:absolute;top:12px;right:12px} 
 /* Section 5 — Contact */
 #contact{background:var(--c-deep);color:#fff;padding:90px 0}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:center}
 .contact-grid h2{grid-column:1/-1;text-align:center;margin:0 0 12px 0;font-family:var(--ff-title);font-size:var(--h2);color:#e3f3ff}
 .contact-bar{display:grid;grid-template-columns:1fr;gap:12px;margin:10px 0 30px;justify-items:center}
-.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700}
+.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;font-size:clamp(18px,2.2vw,24px)}
 .brand-center{display:grid;place-items:center}
 .socials{display:flex;gap:12px;justify-content:flex-end}
 .socials a{width:44px;height:44px;border-radius:10px;background:transparent;display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900;border:none}
@@ -134,7 +136,7 @@ nav a:hover{opacity:1}
   <section id="s1">
     <div class="s1-img" aria-hidden="true"></div>
     <div class="s1-text">
-      <h2 class="s1-title">UNE PÂTE <span class="underline">MAISON</span>, DES PRODUITS <span class="underline">FRAIS</span>, UNE PÂTE <span class="underline">FRÂÎCHE</span>, RIEN DE <span class="underline">PLUS</span>, RIEN DE <span class="underline" style="color:#0e2e42">MOINS</span></h2>
+      <h2 class="s1-title">UNE PÂTE <span class="underline">MAISON</span>, DES PRODUITS <span class="underline">FRAIS</span>, UNE PÂTE <span class="underline">FRAÎCHE</span>, RIEN DE <span class="underline">PLUS</span>, RIEN DE <span class="underline" style="color:#0e2e42">MOINS</span></h2>
       <a class="btn" href="#carte"><img class="star" src="images/star-white.webp" alt=""> Notre carte</a>
     </div>
   </section>
@@ -196,7 +198,7 @@ nav a:hover{opacity:1}
         <a href="tel:+33562517017">Prendre contact</a>
       </div>
       <div class="brand-center">
-        <img src="images/logo-light.png" alt="La Solina" style="max-width:260px;opacity:.95" />
+        <img src="images/logo-dark.jpeg" alt="La Solina" style="max-width:260px;opacity:.95" />
       </div>
       <div class="socials">
         <a aria-label="Instagram" href="https://www.instagram.com/lasolina_pizzas/" target="_blank" rel="noopener">IG</a>
@@ -235,17 +237,20 @@ function render(cat){ grid.innerHTML=''; (pizzas[cat]||[]).forEach(p=>{ const ca
 render('basiques');
 document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render(btn.dataset.cat);}));
 
-// ===== FAQ (un seul ouvert, affiché dans le panneau) =====
+// ===== FAQ (un seul ouvert en plein cadre + bouton fermer) =====
 const faqText={
  q1:'Oui : nos pizzas sont préparées artisanalement puis stockées pour être cuites et servies au distributeur.',
  q2:'Le distributeur réfrigère, conserve et réchauffe sur commande pour garantir la fraîcheur.',
  q3:'Les distributeurs sont disponibles 24/7 ; la boutique a ses propres horaires.',
  q4:'Retrouvez ici les réponses aux questions les plus fréquentes.'
 };
+const faqArea=document.querySelector('.faq-area');
 const faqPanel=document.getElementById('faq-panel');
-function openFaq(id){ faqPanel.innerHTML=`<p>${faqText[id]||''}</p>`; document.querySelectorAll('.faq-panel').forEach(p=>p.classList.add('active')); }
+function openFaq(id){
+  faqPanel.innerHTML=`<button class="btn faq-back" onclick="closeFaq()">Fermer</button><p>${faqText[id]||''}</p>`;
+  faqArea.classList.add('open');
+}
+function closeFaq(){ faqArea.classList.remove('open'); faqPanel.innerHTML=''; }
+
 document.querySelectorAll('.faq-item').forEach(it=>it.addEventListener('click',()=>openFaq(it.dataset.id)));
 
-</script>
-</body>
-</html>

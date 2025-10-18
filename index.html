@@ -2,133 +2,285 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Pizzeria — Commander & Distributeurs</title>
-<link rel="preconnect" href="https://unpkg.com" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>La Solina — Pizzas artisanales à Tarbes (Hautes-Pyrénées)</title>
+<meta name="description" content="Pizzeria artisanale à Tarbes : pâte maison, produits frais, cuisson soignée. Découvrez notre carte et nos distributeurs 24/7." />
+<meta name="keywords" content="pizzeria Tarbes, pizzas artisanales, Hautes-Pyrénées, produits frais, distributeur à pizza, meilleure pizza Tarbes" />
+<meta property="og:title" content="La Solina — Pizzas artisanales à Tarbes" />
+<meta property="og:description" content="Pâte maison, produits frais, cuisson soignée. Notre carte et nos distributeurs 24/7." />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="theme-color" content="#122432" />
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+<!-- Fonts: Antonio & Open Sans via Google; Agrandir & Colette: placeholders to replace with local @font-face -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700;900&family=Open+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&family=League+Spartan:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0c0c0c;--txt:#111;--white:#fff;--green:#1D4935;--accent:#28a745;--radius:28px;--shadow:0 10px 30px rgba(0,0,0,.25)}
-*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-.container{width:100%;max-width:1100px;margin:0 auto;padding:24px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:16px 22px;border-radius:999px;border:3px solid #e6f0e9;background:#fff;box-shadow:var(--shadow);font-weight:700;transition:transform .06s ease,box-shadow .2s ease}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{border-color:#dfeee6}
-.btn-outline{background:#fff;border-color:#dfeee6}
-.section{padding:64px 0}
-.hero{min-height:88vh;display:grid;place-items:center;color:#fff;background:url('https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?q=80&w=1974&auto=format&fit=crop') center/cover fixed;position:relative}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.55))}
-.hero .inner{position:relative;z-index:1;text-align:center;padding:24px}
-h1{font-size:clamp(36px,6vw,64px);margin:0 0 16px 0;color:#fff;font-weight:900;letter-spacing:.5px}
-.hero-cta{margin-top:24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.card{background:rgba(20,30,24,.8);backdrop-filter:blur(8px);border-radius:24px;padding:20px 20px 10px;box-shadow:var(--shadow);color:#eef4ef;max-width:760px;margin:20px auto;border:1px solid rgba(255,255,255,.12)}
-.card label{display:block;font-weight:700;letter-spacing:.6px;margin:0 0 8px 8px}
-.select{width:100%;padding:12px 14px;border-radius:10px;border:2px solid #cfe3d6;background:#f8fff9}
-.order{display:grid;gap:16px;max-width:680px;margin:0 auto}
-.order .platform{display:flex;align-items:center;justify-content:center;padding:18px 24px;border-radius:999px;background:#fff;border:4px solid #dfeee6;box-shadow:var(--shadow);font-size:22px;font-weight:800}
-.order .platform em{font-style:normal;color:#33c24d}
-.order .platform .logo{height:22px;margin-right:10px}
-.map-wrap{max-width:1100px;margin:0 auto}
-#map{height:520px;border-radius:20px;box-shadow:var(--shadow);border:1px solid #e4e4e4}
-.map-actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#fff;border:2px solid #e6f0e9;font-weight:700}
-.footer{padding:36px 0;color:#666;border-top:1px solid #eee;text-align:center}
-@media (max-width:640px){.hero{min-height:78vh}.order .platform{font-size:18px}}
+:root{--c-hero:#d1f3ff;--c-text:#000;--c-deep:#122432;--c-accent:#0e2e42;--c-red:#c0272d;--c-red2:#db4f4c;--c-white:#fff;--container:1200px;--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.15);--transition:.3s ease;--h1:clamp(28px,5.6vw,92px);--h2:clamp(28px,4.2vw,72px);--h3:clamp(18px,2vw,28px)}
+/* Font stacks */
+:root{--ff-title:'Antonio', system-ui, sans-serif;--ff-body:'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;--ff-btn:'Space Grotesk','Antonio',system-ui,sans-serif;--ff-price:'Space Grotesk','Antonio',sans-serif;--ff-pizza:'League Spartan','Antonio',sans-serif}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:#f3f6f8;color:var(--c-text);font-family:var(--ff-body);line-height:1.4}
+img{max-width:100%;display:block}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px}
+section{position:relative}
+p:not(.center-btn){text-align:justify;text-justify:inter-word;text-align-last:left;hyphens:auto;-webkit-hyphens:auto}
+/* Header */
+.site-header{position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;z-index:1000;transition:var(--transition);background:transparent}
+.site-header.scrolled{background:var(--c-deep);box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:36px}
+nav{margin-left:auto;display:flex;gap:20px;align-items:center}
+nav a{color:var(--c-white);text-decoration:none;font-weight:700;letter-spacing:.02em;opacity:.92;transition:var(--transition);font-family:var(--ff-btn)}
+nav a:hover{opacity:1}
+/* Header logo swap */
+.logo-light{display:none}
+.site-header.scrolled .logo-dark{display:none}
+.site-header.scrolled .logo-light{display:block}
+/* Hero */
+#hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr}
+.hero-title{font-family:var(--ff-title);font-weight:900;letter-spacing:.02em;line-height:1.05;margin:0 0 24px 0;font-size:var(--h1);color:#000}
+.hero-cta{display:flex;align-items:center;gap:16px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--c-accent);color:var(--c-white);border:2px solid #000;border-radius:999px;padding:14px 22px;font-weight:800;text-decoration:none;box-shadow:0 6px 0 rgba(0,0,0,.25);transition:transform .1s ease,box-shadow .1s ease;font-family:var(--ff-btn)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.btn-outline{background:transparent;color:var(--c-white);border-color:var(--c-white)}
+.sparkle{width:18px;height:18px;border-radius:999px;background:var(--c-white);position:relative;box-shadow:0 0 0 2px var(--c-white) inset}
+.sparkle:before,.sparkle:after{content:"";position:absolute;inset:0;margin:auto;border-radius:2px;background:var(--c-white)}
+.sparkle:before{width:2px;height:18px}
+.sparkle:after{width:18px;height:2px}
+.hero-right{min-height:92vh;background-image:url('/images/photohero.jpeg');background-size:cover;background-position:center;background-attachment:fixed}
+/* Section 1 */
+#s1{display:grid;grid-template-columns:1fr 1fr}
+.s1-img{background-image:url('/images/photosection1.heic');background-size:cover;background-position:center;background-attachment:fixed;min-height:70vh}
+.s1-text{background:var(--c-hero);padding:80px 6vw;display:flex;flex-direction:column;justify-content:center}
+.underline{ text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 2px; }
+.s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.08;margin:0 0 28px 0;color:#000}
+/* Section 2 */
+#s2{background:var(--c-deep);color:var(--c-white)}
+.s2-bar{padding:80px 6vw 24px 6vw;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:24px}
+.s2-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.08;margin:0}
+.s2-title .frais{color:var(--c-hero)}
+.s2-cta{justify-self:end}
+.s2-arrow{width:64px;height:24px;display:inline-block}
+.s2-arrow svg{width:28px;height:28px;fill:none;stroke:var(--c-white);stroke-width:3}
+@keyframes wiggle{0%,100%{transform:translateX(0)}50%{transform:translateX(10px)}}
+.s2-photo{height:56vh;background-image:url('/images/photosection2.jpg');background-size:cover;background-position:center;background-attachment:fixed}
+/* Section 3 — Carte */
+#carte{background:var(--c-deep);color:var(--c-white);padding:100px 0}
+.carte-head{display:flex;align-items:center;gap:24px;margin-bottom:36px}
+.carte-head h2{font-family:var(--ff-title);font-size:var(--h2);margin:0;color:#e3f3ff}
+.carte-head .call{margin-left:auto}
+.tabs{display:flex;gap:22px;flex-wrap:wrap;margin:28px 0 14px 0}
+.tab{padding:10px 18px;border-radius:10px;background:#d1f3ff;color:#0e2e42;font-weight:900;border:2px solid transparent;cursor:pointer;user-select:none;font-family:var(--ff-btn)}
+.tab.active{background:transparent;color:#fff;border-color:var(--c-red)}
+/* vue immuable: zone fixe + scroll interne */
+.carte-viewport{height:520px;border-top:1px solid #fff2;border-bottom:1px solid #fff2;overflow:auto;padding:12px 2px}
+.pizza-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;padding:18px 2px}
+.pizza h3{margin:0 0 6px 0;color:#d1f3ff;letter-spacing:.02em;font-family:var(--ff-pizza)}
+.pizza .price{color:var(--c-red2);font-weight:900;font-family:var(--ff-price)}
+.pizza p{margin:8px 0 0 0;color:#fff;opacity:.9;font-family:var(--ff-body)}
+.hr{height:1px;background:#fff;margin:12px 0;opacity:.35}
+/* Section 4 — FAQ */
+#faq{background:var(--c-deep);color:#fff;padding:80px 0}
+.faq-wrap{position:relative}
+.faq-wrap h2{font-family:var(--ff-title);font-size:var(--h2);color:#e3f3ff;margin:0 0 16px 0}
+.faq-wrap h2 .accent{color:var(--c-hero)}
+.faq-area{position:relative;border:2px solid #fff;padding:0;border-radius:10px;overflow:hidden;background:rgba(14,46,66,.8)}
+.faq-list,.faq-panel{height:520px;overflow:auto}
+.faq-item{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:2px solid #fff}
+.faq-q{font-weight:800;font-family:var(--ff-body)}
+.faq-toggle{width:28px;height:28px;border:2px solid #fff;border-radius:6px;display:grid;place-items:center;cursor:pointer;font-size:18px;line-height:1}
+.faq-toggle:before{content:"⌄";color:#fff}
+.faq-panel{display:none;padding:22px}
+.faq-panel.active{display:block}
+.faq-back{position:absolute;top:12px;right:12px}
+/* Section 5 — Contact */
+#contact{background:var(--c-deep);color:#fff;padding:90px 0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:center}
+.contact-grid h2{grid-column:1/-1;text-align:center;margin:0 0 12px 0;font-family:var(--ff-title);font-size:var(--h2);color:#e3f3ff}
+.contact-bar{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:10px 0 30px}
+.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;justify-self:center}
+.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;justify-self:center}
+.contact-links{display:flex;flex-direction:column;gap:18px}
+.contact-links a{text-decoration:underline;color:#fff;font-weight:800}
+.brand-center{display:grid;place-items:center}
+.socials{display:flex;gap:12px;justify-content:flex-end}
+.socials a{width:44px;height:44px;border-radius:10px;background:var(--c-deep);display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900;border:2px solid #fff}
+.footer-small{margin-top:36px;text-align:center;opacity:.9}
+.footer-small a{color:#fff}
+/* Utilities */
+.u-white{color:#fff}
+.u-hero{color:var(--c-hero)}
+/* Responsive */
+@media (max-width:1100px){#hero{grid-template-columns:1fr} .hero-right{display:none} .s1-img{min-height:40vh;background-attachment:scroll} .s2-photo{background-attachment:scroll;height:44vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}}
+@media (max-width:720px){.site-header{height:64px} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}}
+.star{width:18px;height:18px;display:inline-block;object-fit:contain;vertical-align:middle}
 </style>
 </head>
 <body>
-
-<!-- HERO -->
-<header class="hero">
-  <div class="inner container">
-    <h1>Trouvez votre restaurant</h1>
-
-    <!-- Sélecteur ville (facultatif pour filtrer liens) -->
-    <div class="card">
-      <label for="city">Sélectionnez votre ville</label>
-      <select id="city" class="select">
-        <option value="tarbes" selected>Tarbes</option>
-        <option value="semeac">Séméac</option>
-        <option value="lourdes">Lourdes</option>
-      </select>
-    </div>
-
-    <div class="hero-cta">
-      <a href="#commander" class="btn btn-primary">🍕 Commander</a>
-      <a href="#map" class="btn btn-outline">📍 Voir les distributeurs</a>
-    </div>
+<header class="site-header" id="header">
+  <div class="container" style="display:flex;align-items:center;gap:22px">
+    <a class="brand" href="#hero" aria-label="Accueil La Solina">
+      <!-- Logo dark (texte foncé) visible en haut de page -->
+      <img class="logo-dark" src="/images/logo-dark.jpeg" alt="La Solina" />
+      <!-- Logo light (texte clair) visible après scroll -->
+      <img class="logo-light" src="/images/logo-light.png" alt="La Solina" />
+    </a>
+    <nav>
+      <a href="#hero">Accueil</a>
+      <a href="#s1">Les pizzas</a>
+      <a href="#carte">Carte</a>
+      <a href="#faq">Questions</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
 </header>
 
-<!-- BLOC COMMANDE (Uber/Deliveroo) -->
-<section id="commander" class="section">
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <h1 class="hero-title">FRAÎCHE, ARTISANALE, PRÉPARÉE<br/>POUR VOUS</h1>
+    <div class="hero-cta">
+      <a class="btn" href="#carte"><img class="star" src="/images/star-white.png" alt=""> Notre carte</a>
+    </div>
+  </div>
+  <div class="hero-right" aria-hidden="true"></div>
+</section>
+
+<!-- SECTION 1 -->
+<section id="s1">
+  <div class="s1-img" aria-hidden="true"></div>
+  <div class="s1-text">
+    <h2 class="s1-title">UNE PÂTE <span class="underline">MAISON</span>, DES PRODUITS <span class="underline">FRAIS</span>, UNE CUISSON <span class="underline">SOIGNÉE</span>, RIEN DE <span class="underline">PLUS</span>, RIEN DE <span style="color:var(--c-accent)" class="underline">MOINS</span></h2>
+    <a class="btn" href="#carte"><img class="star" src="/images/star-white.webp" alt=""> Notre carte</a>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section id="s2">
+  <div class="s2-bar container">
+    <h2 class="s2-title">POUR CEUX QUI AIMENT LE VRAI GOÛT DU <span class="frais">FRAIS</span></h2>
+    <div class="s2-cta" style="display:flex;align-items:center;gap:18px">
+      <svg class="s2-arrow" viewBox="0 0 64 24" aria-hidden="true" style="animation:wiggle 3s ease-in-out infinite">
+        <path d="M2 12 H58" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+        <path d="M46 3 L62 12 L46 21" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <a class="btn btn-outline" href="carte.html"><img class="star" src="/images/star-white.webp" alt=""> Nos Distributeurs</a>
+    </div>
+  </div>
+  <div class="s2-photo" aria-hidden="true"></div>
+</section>
+
+<!-- SECTION 3 — CARTE -->
+<section id="carte">
   <div class="container">
-    <div class="order">
-      <a id="link-uber" class="platform" href="https://www.ubereats.com/fr" target="_blank" rel="noopener">
-        Uber&nbsp;<em>Eats</em>
-      </a>
-      <a id="link-deliveroo" class="platform" href="https://deliveroo.fr/" target="_blank" rel="noopener">
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Deliveroo_logo_%282016%29.svg" alt="Deliveroo"> deliveroo
-      </a>
+    <div class="carte-head">
+      <h2>NOTRE CARTE</h2>
+      <a class="btn call" href="tel:+33562517017"><img class="star" src="/images/star-white.webp" alt=""> Commander</a>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <div class="tab active" data-cat="basiques">Basiques</div>
+      <div class="tab" data-cat="classiques">Classiques</div>
+      <div class="tab" data-cat="gourmandes">Gourmandes</div>
+      <div class="tab" data-cat="speciales">Spéciales</div>
+      <div class="tab" data-cat="autres">Autres</div>
+    </div>
+
+    <div class="carte-viewport" id="carteViewport">
+      <!-- Contenu injecté par JS selon la tab -->
+      <div class="pizza-grid" id="pizzaGrid"></div>
     </div>
   </div>
 </section>
 
-<!-- CARTE DES DISTRIBUTEURS -->
-<section class="section" aria-label="Distributeurs">
-  <div class="container map-wrap">
-    <div class="map-actions">
-      <button id="nearest" class="badge">📍 Le plus proche de moi</button>
-      <div class="badge">🧭 Astuce : pince/zoom pour explorer</div>
+<!-- SECTION 4 — FAQ -->
+<section id="faq">
+  <div class="container faq-wrap">
+    <h2>CHEZ LA SOLINA, NOUS PRENONS LE TEMPS DE RÉPONDRE À TOUTES <span class="accent">VOS QUESTIONS</span></h2>
+    <div class="faq-area" id="faqArea">
+      <div class="faq-list" id="faqList">
+        <!-- Questions (liste) -->
+        <div class="faq-item" data-id="q1"><div class="faq-q">Les pizzas du distributeur sont-elles artisanales ?</div><div class="faq-toggle"></div></div>
+        <div class="faq-item" data-id="q2"><div class="faq-q">Comment fonctionnent les distributeurs ?</div><div class="faq-toggle"></div></div>
+        <div class="faq-item" data-id="q3"><div class="faq-q">À quelles heures peut-on avoir des pizzas ?</div><div class="faq-toggle"></div></div>
+        <div class="faq-item" data-id="q4"><div class="faq-q">Les questions les plus posées…</div><div class="faq-toggle"></div></div>
+      </div>
+      <!-- Panneau réponse (plein cadre) -->
+      <div class="faq-panel" id="faqPanel">
+        <button class="btn btn-outline faq-back" id="faqBack">Retour</button>
+        <div id="faqContent"></div>
+      </div>
     </div>
-    <div id="map"></div>
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container">© Pizzeria — pizzas artisanales • OpenStreetMap + Leaflet</div>
-</footer>
+<!-- SECTION 5 — CONTACT -->
+<section id="contact">
+  <div class="container contact-grid">
+    <h2>NOUS <span class="u-hero">CONTACT</span>ER</h2>
+    <div class="contact-bar">
+      <a href="#" target="_blank" rel="noopener">En savoir plus sur les distributeurs à pizza</a>
+      <a href="tel:+33562517017">Prendre contact</a>
+    </div>
+    <div class="brand-center">
+      <img src="/images/logo-light.svg" alt="La Solina" style="max-width:260px;opacity:.95" />
+    </div>
+    <div class="socials">
+      <a aria-label="Instagram" href="https://www.instagram.com/lasolina_pizzas/" target="_blank" rel="noopener">IG</a>
+      <a aria-label="Facebook" href="https://www.facebook.com/lasolina.pizzas/" target="_blank" rel="noopener">f</a>
+      <a aria-label="YouTube" href="#" target="_blank" rel="noopener">▶</a>
+    </div>
+    <div class="footer-small" style="grid-column:1/-1">
+      <a href="#" target="_blank" rel="noopener">mentions</a> - <a href="#" target="_blank" rel="noopener">CGU</a><br/>
+      <a href="https://cazacomm.fr" target="_blank" rel="noopener">2025 Caza Comm</a>
+    </div>
+  </div>
+</section>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
-// 1) Liens plateformes par ville (remplace par tes URLs précises Uber/Deliveroo)
-const LINKS_BY_CITY={
-  tarbes:{uber:"https://www.ubereats.com/fr/city/tarbes",deliveroo:"https://deliveroo.fr/menu/tarbes"},
-  semeac:{uber:"https://www.ubereats.com/fr/city/semeac",deliveroo:"https://deliveroo.fr/menu/semeac"},
-  lourdes:{uber:"https://www.ubereats.com/fr/city/lourdes",deliveroo:"https://deliveroo.fr/menu/lourdes"}
+/* ===== Header apparition à mi-hero + swap logos ===== */
+const header=document.getElementById('header');
+const hero=document.getElementById('hero');
+const heroHalf=()=>hero.offsetHeight*0.5;function onScroll(){if(window.scrollY>heroHalf()){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}}window.addEventListener('scroll',onScroll);window.addEventListener('resize',onScroll);onScroll();
+/* ===== Tabs Carte (zone fixe + scroll interne) ===== */
+const TABS=document.getElementById('tabs');
+const GRID=document.getElementById('pizzaGrid');
+const VIEW=document.getElementById('carteViewport');
+const pizzas={
+  basiques:[
+    {name:'La Fromage',price:'7,70 €',desc:"Sauce tomate (tomates 100% italiennes), olives, mozzarella, emmental fondu. Pizza de 33cm et 6,60€ pour 29cm."},
+    {name:'La Jambon',price:'9,90 €',desc:"Sauce tomate, olives, jambon supérieur (100% porc français), mozzarella. 33cm et 8,60€ pour 29cm."},
+    {name:'La Provençale',price:'8,90 €',desc:"Sauce tomate, olives, tomates cerises, persillade, herbes de Provence, mozzarella. 33cm et 7,50€ (29cm)."},
+    {name:'La Reine',price:'11,50 €',desc:"Sauce tomate, olives, jambon supérieur (100% porc français), champignons, mozzarella. 33cm et 9,50€ (29cm)."}
+  ],
+  classiques:[],
+  gourmandes:[],
+  speciales:[],
+  autres:[]
 };
-const cityEl=document.getElementById('city'), uberEl=document.getElementById('link-uber'), delivEl=document.getElementById('link-deliveroo');
-function updateLinks(){const c=cityEl.value; if(LINKS_BY_CITY[c]){uberEl.href=LINKS_BY_CITY[c].uber; delivEl.href=LINKS_BY_CITY[c].deliveroo;}}
-cityEl.addEventListener('change',updateLinks); updateLinks();
-
-// 2) Données distributeurs (AJOUTE/REMPLACE par tes points réels)
-const LOCATIONS=[
-  {name:"Distributeur — Tarbes Sport",lat:43.2236,lng:0.0760,address:"111 Av. des Sports, Séméac"},
-  {name:"Distributeur — Centre Tarbes",lat:43.2321,lng:0.0730,address:"Centre-ville, Tarbes"},
-  {name:"Distributeur — Lourdes Nord",lat:43.1209,lng:-0.0482,address:"Lourdes"}
-];
-
-// 3) Init carte
-const map=L.map('map',{scrollWheelZoom:true}).setView([43.226,0.07],12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
-
-const markers=[];
-LOCATIONS.forEach(p=>{
-  const m=L.marker([p.lat,p.lng]).addTo(map).bindPopup(`<strong>${p.name}</strong><br>${p.address||""}`);
-  markers.push({...p,marker:m});
-});
-
-// 4) Trouver le plus proche via géolocalisation
-function haversine(a,b){const R=6371e3;const toRad=g=>g*Math.PI/180;const dLat=toRad(b.lat-a.lat),dLng=toRad(b.lng-a.lng);const lat1=toRad(a.lat),lat2=toRad(b.lat);const s=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(s));}
-document.getElementById('nearest').addEventListener('click',()=>{
-  if(!navigator.geolocation){alert("Géolocalisation non disponible.");return;}
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const you={lat:pos.coords.latitude,lng:pos.coords.longitude};
-    let best=null;
-    markers.forEach(p=>{const d=haversine(you,{lat:p.lat,lng:p.lng}); if(!best||d<best.d){best={p,d};}});
-    if(best){map.setView([best.p.lat,best.p.lng],15); best.p.marker.openPopup();}
-  },err=>{alert("Impossible d'obtenir votre position.");},{enableHighAccuracy:true,timeout:8000});
-});
+function render(cat='basiques'){GRID.innerHTML='';(pizzas[cat]||[]).forEach((p,i)=>{const card=document.createElement('div');card.className='pizza';card.innerHTML=`<h3>${p.name} <span class="price">${p.price}</span></h3><div class='hr'></div><p>${p.desc}</p>`;GRID.appendChild(card)});VIEW.scrollTop=0}
+render('basiques');
+TABS.addEventListener('click',e=>{const tab=e.target.closest('.tab');if(!tab)return;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');render(tab.dataset.cat)});
+/* ===== FAQ — liste -> plein cadre (1 ouverte à la fois) ===== */
+const faqList=document.getElementById('faqList');
+const faqPanel=document.getElementById('faqPanel');
+const faqContent=document.getElementById('faqContent');
+const faqBack=document.getElementById('faqBack');
+const faqAnswers={q1:'Oui. Toutes nos pizzas sont préparées en pizzeria avec une pâte maison, des produits frais, puis stockées en froid positif avant cuisson à la commande dans le distributeur.',q2:'Le distributeur conserve nos pizzas en chambre froide. Quand vous commandez, il cuit la pizza à haute température en quelques minutes et vous la remet chaude, croustillante et sécurisée.',q3:'24h/24 et 7j/7 sur nos distributeurs. En pizzeria, suivez les horaires indiqués sur Google.',q4:"Retrouvez aussi nos infos allergènes et tailles en boutique. Posez-nous vos questions !"};
+faqList.addEventListener('click',e=>{const item=e.target.closest('.faq-item');if(!item)return;const id=item.dataset.id;faqContent.innerHTML=`<h3 style='margin-top:12px'>${item.querySelector('.faq-q').textContent}</h3><p style='margin-top:10px;opacity:.95'>${faqAnswers[id]||''}</p>`;faqList.style.display='none';faqPanel.classList.add('active')});
+faqBack.addEventListener('click',()=>{faqPanel.classList.remove('active');faqList.style.display='block'});
+/* ===== Smooth scroll anchors ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el)return;e.preventDefault();window.scrollTo({top:el.offsetTop-64,behavior:'smooth'})})});
 </script>
+
+<!-- TODO IMAGES
+/images/logo-dark.svg  (logo fond transparent + texte foncé)
+/images/logo-light.svg (logo fond foncé + texte clair)
+/images/photohero.jpg (image verticale héro droite)
+/images/photosection1.jpg (photo section 1 gauche)
+/images/photosection2.jpg (photo section 2 bas)
+-->
 </body>
 </html>

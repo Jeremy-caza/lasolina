@@ -396,5 +396,27 @@ nav a:hover{opacity:1}
   }
 })();
 </script>
+<script>
+// ===== Burger (mobile) =====
+(function(){
+  const burger = document.querySelector('.burger');
+  const siteHeader = document.querySelector('.site-header');
+  const siteNav = document.getElementById('site-nav');
+  if (burger && siteHeader && siteNav){
+    const closeMenu = ()=>{ burger.setAttribute('aria-expanded','false'); siteHeader.classList.remove('open'); };
+    const openMenu  = ()=>{ burger.setAttribute('aria-expanded','true');  siteHeader.classList.add('open'); };
+    burger.addEventListener('click', ()=>{
+      siteHeader.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    document.addEventListener('click', (e)=>{
+      if (!siteHeader.classList.contains('open')) return;
+      if (e.target.closest('.burger') || e.target.closest('#site-nav')) return;
+      closeMenu();
+    });
+    window.addEventListener('resize', ()=>{ if (window.innerWidth>768) closeMenu(); });
+    document.querySelectorAll('#site-nav a').forEach(a=>a.addEventListener('click', closeMenu));
+  }
+})();
+</script>
 </body>
 </html>

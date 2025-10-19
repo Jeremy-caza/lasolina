@@ -21,14 +21,15 @@
 :root{--ff-title:'Antonio',system-ui,sans-serif;--ff-body:'Open Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;--ff-btn:'Space Grotesk','Antonio',system-ui,sans-serif;--ff-price:'Space Grotesk','Antonio',sans-serif;--ff-pizza:'League Spartan','Antonio',sans-serif}
 *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:#f3f6f8;color:var(--c-text);font-family:var(--ff-body);line-height:1.4}
 img{max-width:100%;display:block}
+html,body{overflow-x:hidden}
 .container{max-width:var(--container);margin:0 auto;padding:0 24px}
 section{position:relative}
 /* Header */
 .site-header{position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;z-index:1000;transition:var(--transition);background:transparent}
 .site-header.scrolled{background:var(--c-deep);box-shadow:var(--shadow)}
-.brand{display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;position:relative;width:100%}
 .brand img{height:36px}
-.brand-home{display:flex;align-items:center;gap:12px}
+.brand-home{display:flex;align-items:center;gap:12px;margin:0 auto}
 nav{margin-left:auto;display:flex;gap:20px;align-items:center}
 nav a{color:var(--c-white);text-decoration:none;font-weight:700;letter-spacing:.02em;opacity:.92;transition:var(--transition);font-family:var(--ff-btn)}
 nav a:hover{opacity:1}
@@ -36,6 +37,17 @@ nav a:hover{opacity:1}
 .logo-dark{display:none}
 .site-header.scrolled .logo-light{display:none}
 .site-header.scrolled .logo-dark{display:block}
+/* Burger */
+.burger{display:none;position:absolute;right:16px;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:12px;background:rgba(0,0,0,.3);box-shadow:0 6px 0 rgba(0,0,0,.25);border:2px solid #000;padding:8px;z-index:2200}
+.burger span{display:block;height:3px;background:#e6f6ff;margin:6px 4px;border-radius:2px}
+/* Mobile panel */
+@media (max-width:768px){
+  .burger{display:block}
+  /* nav en panneau plein écran au-dessus de tout */
+  #site-nav{position:fixed;inset:64px 0 auto 0;background:rgba(10,30,45,.98);display:block;padding:12px 0;transform:translateY(-120%);transition:transform .35s ease;z-index:2100;border-top:1px solid #fff2}
+  #site-nav a{display:block;padding:22px 24px;font-size:22px;border-bottom:1px solid #ffffff14}
+  .site-header.open #site-nav{transform:translateY(0)}
+}
 /* Hero */
 #hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr}
 .hero-left{background:var(--c-hero);padding:120px 8vw 80px;display:flex;flex-direction:column;justify-content:center}
@@ -104,7 +116,13 @@ nav a:hover{opacity:1}
 .footer-small a{color:#fff}
 /* Responsive */
 @media (max-width:1100px){#hero{grid-template-columns:1fr} .hero-right{display:none} .s1-img{min-height:60vh;background-attachment:scroll} .s2-photo{background-attachment:scroll;height:50vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}}
-@media (max-width:720px){.site-header{height:64px} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}}
+@media (max-width:720px){.site-header{height:64px} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}
+  .hero-title{font-size:clamp(44px,9.5vw,72px)}
+  /* montrer l'image héros sous le titre en mobile */
+  .hero-right{display:block;min-height:40vh}
+  /* onglets pizza: 2 par ligne */
+  .tabs{grid-template-columns:repeat(2,1fr);gap:14px}
+} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}}
 /* Amélioration FAQ : texte plein cadre et justifié */
 .faq-panel p{max-width:none;text-align:justify;font-family:var(--ff-body);} 
 .faq-panel .answer{max-width:none;width:100%;margin-top:56px} 
@@ -117,7 +135,7 @@ nav a:hover{opacity:1}
   <div class="container brand">
     <a href="#hero" class="brand-home" aria-label="Retour à l’accueil"><img class="logo-light" src="images/logo-light.png" alt="La Solina"/>
     <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina"/></a>
-    <nav>
+    <nav id="site-nav">
       <a href="#hero">Accueil</a>
       <a href="#s1">Les pizzas</a>
       <a href="#carte">Carte</a>
@@ -125,6 +143,7 @@ nav a:hover{opacity:1}
       <a href="#contact">Contact</a>
           <a href="carte.html">Nos Distributeurs</a>
 </nav>
+      <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 

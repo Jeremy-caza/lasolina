@@ -72,6 +72,16 @@ body{overflow-x:hidden}
   nav a{display:block;padding:16px 24px;font-size:20px;border-top:1px solid rgba(255,255,255,.08)}
   .site-header.open nav{transform:translateY(0)}
 }
+/* --- Overlay/stacking fixes so the mobile menu sits above the map & its controls --- */
+@media (max-width: 820px){
+  /* ensure the slide‑down menu is above Leaflet controls */
+  nav{ z-index:2001; }
+  /* dim the page under the menu and intercept taps */
+  .site-header.open::after{
+    content:"";position:fixed;inset:72px 0 0 0;z-index:1900;
+    background:rgba(2,8,12,.6);backdrop-filter:blur(2px);
+  }
+}
 </style>
 </head>
 <body>

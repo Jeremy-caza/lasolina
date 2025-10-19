@@ -24,7 +24,7 @@ img{max-width:100%;display:block}
 nav{margin-left:auto;display:flex;gap:20px;align-items:center}
 nav a{color:#fff;text-decoration:none;font-weight:800;letter-spacing:.02em;opacity:.92;transition:.2s ease}
 nav a:hover{opacity:1}
-nav .active{opacity:1;border-bottom:2px solid var(--c-hero)}
+nav .active{opacity:1}
 /* Logo clair/sombre */
 .brand-home{display:flex;align-items:center;gap:12px}
 .brand-home img{height:36px;display:block}
@@ -56,7 +56,7 @@ nav .active{opacity:1;border-bottom:2px solid var(--c-hero)}
 @media (max-width:900px){.contact-grid{grid-template-columns:1fr}.socials{justify-content:center}}
 /* --- Mobile burger nav --- */
 body{overflow-x:hidden}
-.nav-toggle{display:none;position:absolute;left:16px;top:16px;width:42px;height:42px;border-radius:12px;border:2px solid #000;background:#0e2e42;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.25);}
+.nav-toggle{display:none;position:absolute;right:16px;left:auto;top:16px;z-index:1100;width:42px;height:42px;border-radius:12px;border:2px solid #000;background:#0e2e42;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.25);}
 .nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{content:"";display:block;width:22px;height:2px;background:#fff;margin:0 auto;position:relative;transition:.25s ease}
 .nav-toggle span{top:0}
 .nav-toggle span::before{position:absolute;top:-6px}

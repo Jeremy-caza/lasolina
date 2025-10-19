@@ -28,6 +28,7 @@ section{position:relative}
 .site-header.scrolled{background:var(--c-deep);box-shadow:var(--shadow)}
 .brand{display:flex;align-items:center;gap:12px}
 .brand img{height:36px}
+.brand-home{display:flex;align-items:center;gap:12px}
 nav{margin-left:auto;display:flex;gap:20px;align-items:center}
 nav a{color:var(--c-white);text-decoration:none;font-weight:700;letter-spacing:.02em;opacity:.92;transition:var(--transition);font-family:var(--ff-btn)}
 nav a:hover{opacity:1}
@@ -113,15 +114,16 @@ nav a:hover{opacity:1}
 <body>
 <header class="site-header" id="top">
   <div class="container brand">
-    <img class="logo-light" src="images/logo-light.png" alt="La Solina"/>
-    <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina"/>
+    <a href="#hero" class="brand-home" aria-label="Retour à l’accueil"><img class="logo-light" src="images/logo-light.png" alt="La Solina"/>
+    <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina"/></a>
     <nav>
       <a href="#hero">Accueil</a>
       <a href="#s1">Les pizzas</a>
       <a href="#carte">Carte</a>
       <a href="#faq">Questions</a>
       <a href="#contact">Contact</a>
-    </nav>
+          <a href="carte.html">Nos Distributeurs</a>
+</nav>
   </div>
 </header>
 

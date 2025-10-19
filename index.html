@@ -61,12 +61,12 @@ nav a:hover{opacity:1}
 @keyframes wiggle{0%,100%{transform:translateX(0)}50%{transform:translateX(10px)}}
 .s2-photo{height:72vh;background-image:url('images/photosection2.jpg');background-size:cover;background-position:center;background-attachment:fixed}
 /* Section 3 — Carte */
-#carte{background:var(--c-deep);color:var(--c-white);padding:100px 0}
+#carte{background:var(--c-deep);color:var(--c-white);padding:100px 0;position:relative;z-index:2} 
 .carte-head{display:flex;align-items:center;gap:24px;margin-bottom:36px}
 .carte-head h2{font-family:var(--ff-title);font-size:var(--h2);margin:0;color:#e3f3ff}
 .carte-head .call{margin-left:auto}
-.tabs{display:flex;gap:22px;flex-wrap:wrap;margin:28px 0 14px 0}
-.tab{padding:10px 18px;border-radius:10px;background:#d1f3ff;color:#0e2e42;font-weight:900;border:2px solid transparent;cursor:pointer;user-select:none;font-family:var(--ff-btn)}
+.tabs{display:flex;gap:22px;flex-wrap:wrap;margin:28px 0 14px 0;justify-content:space-between} 
+.tab{flex:1 1 160px;padding:14px 18px;border-radius:10px;background:#d1f3ff;color:#0e2e42;font-weight:900;border:2px solid transparent;cursor:pointer;user-select:none;font-family:var(--ff-btn);text-align:center;font-size:clamp(14px,1.2vw,18px)} 
 .tab.active{background:transparent;color:#fff;border-color:var(--c-red)}
 .carte-viewport{height:520px;border-top:1px solid #fff2;border-bottom:1px solid #fff2;overflow:auto;padding:12px 2px}
 .pizza-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;padding:18px 2px}
@@ -94,7 +94,7 @@ nav a:hover{opacity:1}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:center}
 .contact-grid h2{grid-column:1/-1;text-align:center;margin:0 0 12px 0;font-family:var(--ff-title);font-size:var(--h2);color:#e3f3ff}
 .contact-bar{display:grid;grid-template-columns:1fr;gap:12px;margin:10px 0 30px;justify-items:center}
-.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;font-size:clamp(18px,2.2vw,24px)}
+.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;font-size:clamp(18px,2.2vw,24px);text-align:center;display:block} 
 .brand-center{display:grid;place-items:center}
 .socials{display:flex;gap:12px;justify-content:flex-end}
 .socials a{width:44px;height:44px;border-radius:10px;background:transparent;display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900;border:none}
@@ -235,7 +235,14 @@ const pizzas={
 const grid=document.getElementById('pizza-grid');
 function render(cat){ grid.innerHTML=''; (pizzas[cat]||[]).forEach(p=>{ const card=document.createElement('div'); card.className='pizza'; card.innerHTML=`<h3>${p.name}<span class="price">${p.price}</span></h3><p>${p.desc}</p><div class='hr'></div>`; grid.appendChild(card); }); }
 render('basiques');
-document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render(btn.dataset.cat);}));
+// délégation d'événements robuste pour les tabs
+document.addEventListener('click',(e)=>{
+  const btn=e.target.closest('.tab');
+  if(!btn) return;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render(btn.dataset.cat);
+});
 
 // ===== FAQ (un seul ouvert en plein cadre + bouton fermer) =====
 const faqText={

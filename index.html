@@ -104,8 +104,8 @@ nav a:hover{opacity:1}
 @media (max-width:1100px){#hero{grid-template-columns:1fr} .hero-right{display:none} .s1-img{min-height:60vh;background-attachment:scroll} .s2-photo{background-attachment:scroll;height:50vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}}
 @media (max-width:720px){.site-header{height:64px} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}}
 /* Amélioration FAQ : texte plein cadre et justifié */
-.faq-panel p{max-width:none;text-align:justify}
-.faq-panel .answer{max-width:none;width:100%}
+.faq-panel p{max-width:none;text-align:justify;font-family:var(--ff-body);} 
+.faq-panel .answer{max-width:none;width:100%;margin-top:56px} 
 /* override d'un style inline existant */
 .faq-panel div[style*="max-width:70ch"]{max-width:none !important}
 </style>
@@ -265,11 +265,65 @@ nav a:hover{opacity:1}
       {name:'La Jambon',     price:'9,90 €',  desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), mozzarella. Pizza de 33cm et 8,60€ pour une pizza de 29cm.'},
       {name:'La Reine',      price:'11,50 €', desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), champignons, mozzarella. Pizza de 33cm et 9,50€ pour une pizza de 29cm.'}
     ],
-    classiques: [],
-    gourmandes: [],
-    speciales:  [],
-    autres:     []
-  };
+    classiques: [
+      {name:'La Campagnarde', price:'11,80 €', desc:'Sauce tomate (tomates 100% italiennes), olives, lardons, persillade, crème fraîche, mozzarella. Pizza de 33cm et 9,60€ pour une pizza de 29cm.'},
+      {name:'La Chèvre', price:'11,20 €', desc:'Sauce tomate (tomates 100% italiennes), olives, chèvre, mozzarella. Pizza de 33cm et 9,70€ pour une pizza de 29cm.'},
+      {name:'La Chorizo', price:'11,50 €', desc:'Sauce tomate (tomates 100% italiennes), olives, chorizo, oignons, poivrons, mozzarella. Pizza de 33cm et 9,50€ pour une pizza de 29cm.'},
+      {name:'La Cal\'Z', price:'11,80 €', desc:'Sauce tomate (tomates 100% italiennes), jambon supérieur (100% porc français), crème fraîche, œuf, mozzarella. Pizza de 33cm et 9,90€ pour une pizza de 29cm.'},
+      {name:'La Tropicale', price:'11,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), ananas, crème fraîche, mozzarella. Pizza de 33cm et 9,90€ pour une pizza de 29cm.'},
+      {name:'La Beni Veggie', price:'11,50 €', desc:'Sauce tomate (tomates 100% italiennes), olives, poivrons, champignons, cœur d\'artichauts, tomates, mozzarella. Pizza de 33cm et 9,20€ pour une pizza de 29cm.'},
+      {name:'L\'Orientale', price:'11,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, merguez, oignons, poivrons, mozzarella. Pizza de 33cm et 9,90€ pour une pizza de 29cm.'},
+      {name:'La Fermière', price:'11,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), œuf, crème fraîche, mozzarella. Pizza de 33cm et 9,90€ pour une pizza de 29cm.'}
+    ],
+    gourmandes: [
+      {name:'La 4 Fromages', price:'12,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, roquefort, parmesan, emmental fondu, mozzarella. Pizza de 33cm et 10,80€ pour une pizza de 29cm.'},
+      {name:'La Royale', price:'13,60 €', desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), poivrons, champignons, cœur d\'artichauts, œuf, mozzarella. Pizza de 33cm et 11,60€ pour une pizza de 29cm.'},
+      {name:'La Savoyarde', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, pommes de terre, lardons, reblochon, crème, mozzarella. Pizza de 33cm et 12,90€ pour une pizza de 29cm.'},
+      {name:'La Nordique', price:'14,60 €', desc:'Sauce tomate (tomates 100% italiennes), olives, crème fraîche, saumon fumé, mozzarella. Pizza de 33cm et 12,60€ pour une pizza de 29cm.'},
+      {name:'La Bigourdane', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), œuf, chorizo, merguez, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La Délicieuse', price:'13,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, chorizo, poivrons, champignons, lardons, crème fraîche, persillade, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La Kebab', price:'14,10 €', desc:'Sauce tomate (tomates 100% italiennes), olives, oignons, lamelles de kebab, sauce kebab, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La Texane', price:'14,70 €', desc:'Sauce tomate (tomates 100% italiennes), olives, chorizo, oignons, viande hachée de boeuf, œuf, persillade, mozzarella. Pizza de 33cm et 11,70€ pour une pizza de 29cm.'},
+      {name:'La Samouraï', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), chorizo, lardons, merguez, sauce samouraï épices à pizza, mozzarella. Pizza de 33cm et 12,60€ pour une pizza de 29cm.'},
+      {name:'La Burger', price:'13,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, viande hachée, cheddar, cornichons, sauce burger, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La Fifty', price:'15,50 €', desc:'Panaché de 2 recettes sur la même pizza. Pizza de 33cm et 13,50€ pour une pizza de 29cm.'},
+      {name:'La Raclette', price:'13,90 €', desc:'Crème fraîche légère française, mozzarella, bacon, pommes de terre française, oignons, raclette française. Pizza de 33cm et 11,50€ pour une pizza de 29cm.'}
+    ],
+    speciales: [
+      {name:'La Gersoise', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, crème fraîche, lardons, magret de canard, miel, mozzarella. Pizza de 33cm et 12,90€ pour une pizza de 29cm.'},
+      {name:'La Magret', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, crème fraîche, lardons, magret de canard, persillade, mozzarella. Pizza de 33cm et 12,90€ pour une pizza de 29cm.'},
+      {name:'La Miel', price:'13,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, chèvre, crème fraîche, miel, poulet, barbecue, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La Napolitaine', price:'12,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, câpres, filets d\'anchois, origan, mozzarella. Pizza de 33cm et 11,50€ pour une pizza de 29cm.'},
+      {name:'La Poulet', price:'13,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, ananas, crème fraîche, poulet, sauce curry, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La Rustique', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, crème fraîche, pommes de terre, roquefort, jambon supérieur (100% porc français), mozzarella. Pizza de 33cm et 12,90€ pour une pizza de 29cm.'},
+      {name:'La Reblochon', price:'13,90 €', desc:'Crème fraîche, olives, champignons, lardons, oignons rouges, origan, reblochon, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La 6 Fromages', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, chèvre, emmental, mozzarella, parmesan, reblochon, roquefort. Pizza de 33cm et 13,90€ pour une pizza de 29cm.'},
+      {name:'La Thon', price:'13,60 €', desc:'Sauce tomate (tomates 100% italiennes), olives, crème fraîche, oignons, thon, mozzarella. Pizza de 33cm et 12€ pour une pizza de 29cm.'},
+      {name:'La Bolo', price:'13,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, crème fraîche, oignons, viande hachée de boeuf, mozzarella. Pizza de 33cm et 11,90€ pour une pizza de 29cm.'},
+      {name:'La Roquefort', price:'14,50 €', desc:'Sauce tomate (tomates 100% italiennes), olives, crème fraîche, roquefort, viande hachée de boeuf, mozzarella. Pizza de 33cm et 12,50€ pour une pizza de 29cm.'},
+      {name:'La Kebab Suprême', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, lamelles de kebab, merguez, sauce kebab, viande hachée de boeuf, mozzarella. Pizza de 33cm et 12,20€ pour une pizza de 29cm.'},
+      {name:'La Lorraine', price:'13,00 €', desc:'Crème fraîche, olives, lardons, oignons, mozzarella. Pizza de 33cm et 11€ pour une pizza de 29cm.'},
+      {name:'La Parme', price:'14,90 €', desc:'Sauce tomate (tomates 100% italiennes), olives, boule de mozzarella 50gr, jambon de parme, parmesan, tomates cerises, crème balsamique, roquette, mozzarella. Pizza de 33cm et 12,90€ pour une pizza de 29cm.'},
+      {name:'La Chèvre Miel', price:'14,90 €', desc:'Crème fraîche légère, chèvre, miel, mozzarella. Pizza de 33cm et 12,90€ pour une pizza de 29cm.'},
+      {name:'La So Curry', price:'14,90 €', desc:'Crème fraîche, poulet, sauce curry, poivrons, oignons, olives, miel, mozzarella. Pizza de 33cm et 12,90€ pour une pizza de 29cm.'}
+    ],
+    autres: [
+      {name:'Menu Bambino', price:'7,00 €', desc:'Pizza Fromage ou Jambon ou Reine + 1 boisson + 1 Kinder.'},
+      {name:'Calzone Nutella', price:'4,50 €', desc:'Crème fraîche, Nutella, banane ou poire.'},
+      {name:'Häagen Dazs Macadamia', price:'4 €', desc:''},
+      {name:'Eau de source (50cl)', price:'1 €', desc:''},
+      {name:'Orangina (33cl)', price:'1,90 €', desc:''},
+      {name:'Fuze Tea (33cl)', price:'1,90 €', desc:''},
+      {name:'Coca-Cola (33cl)', price:'1,90 €', desc:''},
+      {name:'Schweppes (33cl)', price:'1,90 €', desc:''},
+      {name:'Oasis (50cl)', price:'1 €', desc:''},
+      {name:'Heineken (33cl)', price:'2 €', desc:''},
+      {name:'Lambrusco rouge/rosé (75cl)', price:'7 €', desc:''},
+      {name:'Desperados (33cl)', price:'3 €', desc:''},
+      {name:'Coca-Cola (1,25L)', price:'3 €', desc:''},
+      {name:'Fuze Tea (1,5L)', price:'3 €', desc:''},
+      {name:'Orangina (1,5L)', price:'3 €', desc:''}
+    ] };
 
   const grid = document.getElementById('pizza-grid');
   const render = cat => {

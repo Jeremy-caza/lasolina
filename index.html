@@ -47,7 +47,7 @@ nav a:hover{opacity:1}
 .hero-right{min-height:92vh;background-image:url('images/photohero.jpeg');background-size:cover;background-position:center;background-attachment:scroll}
 /* Section 1 */
 #s1{display:grid;grid-template-columns:1fr 1fr}
-.s1-img{background-image:url('images/photosection1.heic');background-size:cover;background-position:center;background-attachment:fixed;min-height:90vh}
+.s1-img{background-image:url('images/photosection1.jpg');background-size:cover;background-position:center;background-attachment:fixed;min-height:90vh}
 .underline{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:3px}
 .s1-text{background:var(--c-hero);padding:80px 6vw;display:flex;flex-direction:column;justify-content:center}
 .s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.2;margin:0 0 28px 0;color:#000} #s1 .btn{align-self:flex-end;} 
@@ -65,9 +65,9 @@ nav a:hover{opacity:1}
 .carte-head{display:flex;align-items:center;gap:24px;margin-bottom:36px}
 .carte-head h2{font-family:var(--ff-title);font-size:var(--h2);margin:0;color:#e3f3ff}
 .carte-head .call{margin-left:auto}
-.tabs{display:flex;gap:22px;flex-wrap:wrap;margin:28px 0 14px 0;justify-content:space-between} 
-.tab{flex:1 1 160px;padding:14px 18px;border-radius:10px;background:#d1f3ff;color:#0e2e42;font-weight:900;border:2px solid transparent;cursor:pointer;user-select:none;font-family:var(--ff-btn);text-align:center;font-size:clamp(14px,1.2vw,18px)} 
-.tab.active{background:transparent;color:#fff;border-color:var(--c-red)}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;margin:28px 0 14px 0}  
+.tab{padding:16px 22px;border-radius:12px;background:#d1f3ff;color:#0e2e42;font-weight:900;border:2px solid transparent;cursor:pointer;user-select:none;font-family:var(--ff-btn);text-align:center;font-size:clamp(16px,1.6vw,20px);box-shadow:0 4px 0 rgba(0,0,0,.2)}  
+.tab.active{background:transparent;color:#fff;border-color:var(--c-red);box-shadow:0 0 0 rgba(0,0,0,0)}
 .carte-viewport{height:520px;border-top:1px solid #fff2;border-bottom:1px solid #fff2;overflow:auto;padding:12px 2px}
 .pizza-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;padding:18px 2px}
 .pizza h3{margin:0 0 6px 0;color:#d1f3ff;letter-spacing:.02em;font-family:var(--ff-pizza);display:flex;justify-content:space-between;align-items:baseline}
@@ -161,11 +161,11 @@ nav a:hover{opacity:1}
         <a class="btn call" href="tel:+33562517017"><img class="star" src="images/star-white.webp" alt=""> Commander</a>
       </div>
       <div class="tabs">
-        <button class="tab active" data-cat="basiques">BASIQUES</button>
-        <button class="tab" data-cat="classiques">CLASSIQUES</button>
-        <button class="tab" data-cat="gourmandes">GOURMANDES</button>
-        <button class="tab" data-cat="speciales">SPÉCIALES</button>
-        <button class="tab" data-cat="autres">AUTRES</button>
+        <button class="tab active" data-cat="basiques" role="tab" aria-selected="true">BASIQUES</button>
+        <button class="tab" data-cat="classiques" role="tab" aria-selected="false">CLASSIQUES</button>
+        <button class="tab" data-cat="gourmandes" role="tab" aria-selected="false">GOURMANDES</button>
+        <button class="tab" data-cat="speciales" role="tab" aria-selected="false">SPÉCIALES</button>
+        <button class="tab" data-cat="autres" role="tab" aria-selected="false">BOISSONS & KIDS</button>
       </div>
       <div class="carte-viewport">
         <div class="pizza-grid" id="pizza-grid"></div>
@@ -198,7 +198,7 @@ nav a:hover{opacity:1}
         <a href="tel:+33562517017">Prendre contact</a>
       </div>
       <div class="brand-center">
-        <img src="images/logo-dark.jpeg" alt="La Solina" style="max-width:260px;opacity:.95" />
+        <img src="images/logo-light.png" alt="La Solina" style="max-width:260px;opacity:.95" />
       </div>
       <div class="socials">
         <a aria-label="Instagram" href="https://www.instagram.com/lasolina_pizzas/" target="_blank" rel="noopener">IG</a>
@@ -216,7 +216,11 @@ nav a:hover{opacity:1}
 <script>
 // ===== Header scroll state =====
 const header=document.querySelector('.site-header');
-function onScroll(){ if(window.scrollY>window.innerHeight*0.45){header.classList.add('scrolled')}else{header.classList.remove('scrolled')} }
+const heroSec=document.getElementById('hero');
+function onScroll(){
+  const t=(heroSec?.offsetHeight||window.innerHeight)*0.5;
+  if(window.scrollY>t){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}
+}
 window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
 // ===== Smooth anchors =====
@@ -239,10 +243,15 @@ render('basiques');
 document.addEventListener('click',(e)=>{
   const btn=e.target.closest('.tab');
   if(!btn) return;
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>{b.classList.remove('active'); b.setAttribute('aria-selected','false');});
   btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
   render(btn.dataset.cat);
 });
+// keyboard support
+document.querySelectorAll('.tab').forEach(tb=>tb.addEventListener('keydown',e=>{
+  if(e.key==='Enter' || e.key===' '){ e.preventDefault(); tb.click(); }
+}));
 
 // ===== FAQ (un seul ouvert en plein cadre + bouton fermer) =====
 const faqText={

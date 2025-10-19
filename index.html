@@ -219,125 +219,119 @@ nav a:hover{opacity:1}
 </main>
 
 <script>
-// ===== Header scroll state =====
-const header=document.querySelector('.site-header');
-const heroSec=document.getElementById('hero');
-function onScroll(){
-  const t=(heroSec?.offsetHeight||window.innerHeight)*0.5;
-  if(window.scrollY>t){header.classList.add('scrolled')}else{header.classList.remove('scrolled')}
-}
-window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+(()=>{
+  // ===== Header sombre à mi-HERO + swap logo =====
+  const header = document.querySelector('.site-header');
+  const hero   = document.getElementById('hero');
+  const HEADER_H = 72;
+  const midHero = () => (hero ? hero.offsetHeight : window.innerHeight) * 0.5;
+  const applyHeader = () => {
+    if (window.scrollY > midHero()) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', applyHeader, { passive: true });
+  window.addEventListener('resize', applyHeader);
+  applyHeader();
 
-// ===== Smooth anchors (plus doux) =====
-function smoothScrollTo(targetY, duration=1100){
-  const startY = window.scrollY;
-  const diff = targetY - startY;
-  const start = performance.now();
-  function ease(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
-  function step(now){
-    const t = Math.min(1, (now-start)/duration);
-    window.scrollTo(0, startY + diff*ease(t));
-    if(t<1) requestAnimationFrame(step);
+  // ===== Smooth anchors (plus doux ~1100ms, easing) =====
+  function smoothScrollTo(targetY, duration = 1100) {
+    const startY = window.scrollY;
+    const diff   = targetY - startY;
+    const start  = performance.now();
+    const ease   = t => (t < .5 ? 2*t*t : -1 + (4 - 2*t) * t);
+    const step   = now => {
+      const t = Math.min(1, (now - start) / duration);
+      window.scrollTo(0, startY + diff * ease(t));
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   }
-  requestAnimationFrame(step);
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el) return;
-    e.preventDefault();
-    const offset = 72; // hauteur header
-    smoothScrollTo(el.offsetTop - offset, 1100);
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      const y = el.getBoundingClientRect().top + window.scrollY - HEADER_H;
+      smoothScrollTo(y, 1100);
+    });
   });
-});});
 
-// ===== Menu data =====
-const pizzas={
-  basiques:[
-    {name:'La Fromage',price:'7,70 €',desc:'Sauce tomate (tomates 100% italiennes), olives, mozzarella, emmental fondu. Pizza de 33cm et 6,60€ pour une pizza de 29cm.'},
-    {name:'La Provençale',price:'8,90 €',desc:'Sauce tomate (tomates 100% italiennes), olives, tomates cerises, persillade, herbes de Provence, mozzarella. Pizza de 33cm et 7,50€ pour une pizza de 29cm.'},
-    {name:'La Jambon',price:'9,90 €',desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), mozzarella. Pizza de 33cm et 8,60€ pour une pizza de 29cm.'},
-    {name:'La Reine',price:'11,50 €',desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), champignons, mozzarella. Pizza de 33cm et 9,50€ pour une pizza de 29cm.'}
-  ],
-  classiques:[], gourmandes:[], speciales:[], autres:[]
-};
-const grid=document.getElementById('pizza-grid');
-function render(cat){ grid.innerHTML=''; (pizzas[cat]||[]).forEach(p=>{ const card=document.createElement('div'); card.className='pizza'; card.innerHTML=`<h3>${p.name}<span class="price">${p.price}</span></h3><p>${p.desc}</p><div class='hr'></div>`; grid.appendChild(card); }); }
-render('basiques');
-// délégation d'événements robuste pour les tabs
-document.addEventListener('click',(e)=>{
-  const btn=e.target.closest('.tab');
-  if(!btn) return;
-  document.querySelectorAll('.tab').forEach(b=>{b.classList.remove('active'); b.setAttribute('aria-selected','false');});
-  btn.classList.add('active');
-  btn.setAttribute('aria-selected','true');
-  render(btn.dataset.cat);
-});
-// keyboard support
-document.querySelectorAll('.tab').forEach(tb=>tb.addEventListener('keydown',e=>{
-  if(e.key==='Enter' || e.key===' '){ e.preventDefault(); tb.click(); }
-}));
+  // ===== Données + rendu CARTE (onglets) =====
+  const pizzas = {
+    basiques: [
+      {name:'La Fromage',    price:'7,70 €',  desc:'Sauce tomate (tomates 100% italiennes), olives, mozzarella, emmental fondu. Pizza de 33cm et 6,60€ pour une pizza de 29cm.'},
+      {name:'La Provençale', price:'8,90 €',  desc:'Sauce tomate (tomates 100% italiennes), olives, tomates cerises, persillade, herbes de Provence, mozzarella. Pizza de 33cm et 7,50€ pour une pizza de 29cm.'},
+      {name:'La Jambon',     price:'9,90 €',  desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), mozzarella. Pizza de 33cm et 8,60€ pour une pizza de 29cm.'},
+      {name:'La Reine',      price:'11,50 €', desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), champignons, mozzarella. Pizza de 33cm et 9,50€ pour une pizza de 29cm.'}
+    ],
+    classiques: [],
+    gourmandes: [],
+    speciales:  [],
+    autres:     []
+  };
 
-// ===== FAQ (un seul ouvert en plein cadre + bouton fermer) =====
-const faqText={
- q1:'Oui : nos pizzas sont préparées artisanalement puis stockées pour être cuites et servies au distributeur.',
- q2:'Le distributeur réfrigère, conserve et réchauffe sur commande pour garantir la fraîcheur.',
- q3:'Les distributeurs sont disponibles 24/7 ; la boutique a ses propres horaires.',
- q4:'Retrouvez ici les réponses aux questions les plus fréquentes.'
-};
-const faqArea=document.querySelector('.faq-area');
-const faqPanel=document.getElementById('faq-panel');
-function openFaq(id){
-  faqPanel.innerHTML=`<button class="btn faq-back" onclick="closeFaq()">Fermer</button><p>${faqText[id]||''}</p>`;
-  faqArea.classList.add('open');
-}
-function closeFaq(){ faqArea.classList.remove('open'); faqPanel.innerHTML=''; }
-
-document.querySelectorAll('.faq-item').forEach(it=>it.addEventListener('click',()=>openFaq(it.dataset.id)));
-
-</script>
-
-<!-- PATCH: comportements (header scroll, tabs, FAQ) + fermetures manquantes -->
-<script>
-(function(){
-  // ===== Header foncé à mi-HERO + logo swap =====
-  const header=document.querySelector('.site-header');
-  const hero=document.getElementById('hero');
-  function trigger(){return (hero? hero.getBoundingClientRect().height : window.innerHeight)*0.5}
-  function apply(){ if(window.scrollY>trigger()){header.classList.add('scrolled');} else {header.classList.remove('scrolled');} }
-  window.addEventListener('scroll',apply,{passive:true});
-  window.addEventListener('resize',apply);
-  apply();
-
-  // ===== Smooth anchors (plus doux) =====
-function smoothScrollTo(targetY, duration=1100){
-  const startY = window.scrollY;
-  const diff = targetY - startY;
-  const start = performance.now();
-  function ease(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
-  function step(now){
-    const t = Math.min(1, (now-start)/duration);
-    window.scrollTo(0, startY + diff*ease(t));
-    if(t<1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el)return; e.preventDefault(); smoothScrollTo(el.offsetTop-72,1100);})); }
+  const grid = document.getElementById('pizza-grid');
+  const render = cat => {
+    grid.innerHTML = '';
+    (pizzas[cat] || []).forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'pizza';
+      card.innerHTML = `
+        <h3>${p.name}<span class="price">${p.price}</span></h3>
+        <p>${p.desc}</p>
+        <div class="hr"></div>`;
+      grid.appendChild(card);
+    });
+  };
   render('basiques');
-  document.addEventListener('click',e=>{const tab=e.target.closest('.tab'); if(!tab) return; document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');}); tab.classList.add('active'); tab.setAttribute('aria-selected','true'); render(tab.dataset.cat);});
 
-  // ===== FAQ plein cadre + bouton retour =====
-  const faqArea=document.querySelector('.faq-area');
-  const faqPanel=document.getElementById('faq-panel');
-  if(faqArea && faqPanel){
-    const faqText={q1:'Oui : nos pizzas sont préparées artisanalement puis stockées pour être cuites et servies au distributeur.',q2:'Le distributeur réfrigère, conserve et réchauffe sur commande pour garantir la fraîcheur.',q3:'Les distributeurs sont disponibles 24/7 ; la boutique a ses propres horaires.',q4:'Retrouvez ici les réponses aux questions les plus fréquentes.'};
-    function openFaq(id){ faqPanel.innerHTML=`<button class=\"btn faq-back\" onclick=\"closeFaq()\">Retour</button><div style=\"max-width:70ch;margin-top:60px\"><p>${faqText[id]||''}</p></div>`; faqArea.classList.add('open'); }
-    window.closeFaq=function(){ faqArea.classList.remove('open'); faqPanel.innerHTML=''; };
-    document.querySelectorAll('.faq-item').forEach(it=>it.addEventListener('click',()=>openFaq(it.dataset.id)));
+  // Tabs (clic & clavier)
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.tab');
+    if (!btn) return;
+    document.querySelectorAll('.tab').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected','false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    render(btn.dataset.cat);
+  });
+  document.querySelectorAll('.tab').forEach(tb => {
+    tb.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tb.click(); }
+    });
+  });
+
+  // ===== FAQ plein cadre + bouton Retour =====
+  const faqArea  = document.querySelector('.faq-area');
+  const faqPanel = document.getElementById('faq-panel');
+  const faqText  = {
+    q1: 'Oui : nos pizzas sont préparées artisanalement puis stockées pour être cuites et servies au distributeur.',
+    q2: 'Le distributeur réfrigère, conserve et réchauffe sur commande pour garantir la fraîcheur.',
+    q3: 'Les distributeurs sont disponibles 24/7 ; la boutique a ses propres horaires.',
+    q4: 'Retrouvez ici les réponses aux questions les plus fréquentes.'
+  };
+  function openFaq(id) {
+    faqPanel.innerHTML = `
+      <button class="btn faq-back" type="button">Retour</button>
+      <div class="answer"><p>${faqText[id] || ''}</p></div>`;
+    faqArea.classList.add('open');
+  }
+  function closeFaq() {
+    faqArea.classList.remove('open');
+    faqPanel.innerHTML = '';
+  }
+  if (faqArea && faqPanel) {
+    document.querySelectorAll('.faq-item').forEach(it => {
+      it.addEventListener('click', () => openFaq(it.dataset.id));
+    });
+    faqPanel.addEventListener('click', e => {
+      if (e.target.closest('.faq-back')) closeFaq();
+    });
   }
 })();
 </script>
-
 </body>
 </html>

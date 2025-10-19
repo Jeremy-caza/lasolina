@@ -23,6 +23,8 @@ img{max-width:100%;display:block}
 .brand img{height:36px}
 nav{margin-left:auto;display:flex;gap:20px;align-items:center}
 nav a{color:#fff;text-decoration:none;font-weight:800;letter-spacing:.02em;opacity:.92;transition:.2s ease}
+nav a:focus,nav a:active{outline:none;text-decoration:none}
+nav a.active{opacity:1;text-decoration:none;border-bottom:none}
 nav a:hover{opacity:1}
 nav .active{opacity:1}
 /* Logo clair/sombre */
@@ -199,10 +201,18 @@ more.addEventListener('click', (e)=>{ if(more.getAttribute('href')==='#') e.prev
     const open = headerEl.classList.toggle('open');
     toggleBtn.setAttribute('aria-expanded', String(open));
   });
+  // Ferme au clic sur un lien
   document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click', ()=>{
     headerEl.classList.remove('open');
     toggleBtn.setAttribute('aria-expanded','false');
   }));
+  // Ferme si clic hors du header/nav
+  document.addEventListener('click', (e)=>{
+    if(headerEl.classList.contains('open') && !headerEl.contains(e.target)){
+      headerEl.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded','false');
+    }
+  });
 })();</script>
 </body>
 </html>

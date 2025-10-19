@@ -47,7 +47,7 @@ nav a:hover{opacity:1}
 .hero-right{min-height:92vh;background-image:url('images/photohero.jpeg');background-size:cover;background-position:center;background-attachment:scroll}
 /* Section 1 */
 #s1{display:grid;grid-template-columns:1fr 1fr}
-.s1-img{background-image:url('images/photosection1.heic');background-size:cover;background-position:center;background-attachment:fixed;min-height:90vh}
+.s1-img{background-image:url('images/photosection1.jpg');background-size:cover;background-position:center;background-attachment:fixed;min-height:90vh}
 .underline{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:3px}
 .s1-text{background:var(--c-hero);padding:80px 6vw;display:flex;flex-direction:column;justify-content:center}
 .s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.2;margin:0 0 28px 0;color:#000} #s1 .btn{align-self:flex-end;} 
@@ -103,6 +103,11 @@ nav a:hover{opacity:1}
 /* Responsive */
 @media (max-width:1100px){#hero{grid-template-columns:1fr} .hero-right{display:none} .s1-img{min-height:60vh;background-attachment:scroll} .s2-photo{background-attachment:scroll;height:50vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}}
 @media (max-width:720px){.site-header{height:64px} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}}
+/* Amélioration FAQ : texte plein cadre et justifié */
+.faq-panel p{max-width:none;text-align:justify}
+.faq-panel .answer{max-width:none;width:100%}
+/* override d'un style inline existant */
+.faq-panel div[style*="max-width:70ch"]{max-width:none !important}
 </style>
 </head>
 <body>
@@ -198,7 +203,7 @@ nav a:hover{opacity:1}
         <a href="tel:+33562517017">Prendre contact</a>
       </div>
       <div class="brand-center">
-        <img src="images/logo-light.png" alt="La Solina" style="max-width:260px;opacity:.95" />
+        <img src="images/logo-dark.jpeg" alt="La Solina" style="max-width:260px;opacity:.95" />
       </div>
       <div class="socials">
         <a aria-label="Instagram" href="https://www.instagram.com/lasolina_pizzas/" target="_blank" rel="noopener">IG</a>
@@ -223,16 +228,36 @@ function onScroll(){
 }
 window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
-// ===== Smooth anchors =====
-document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el)return; e.preventDefault(); window.scrollTo({top:el.offsetTop-64,behavior:'smooth'});});});
+// ===== Smooth anchors (plus doux) =====
+function smoothScrollTo(targetY, duration=1100){
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  const start = performance.now();
+  function ease(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function step(now){
+    const t = Math.min(1, (now-start)/duration);
+    window.scrollTo(0, startY + diff*ease(t));
+    if(t<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el) return;
+    e.preventDefault();
+    const offset = 72; // hauteur header
+    smoothScrollTo(el.offsetTop - offset, 1100);
+  });
+});});
 
 // ===== Menu data =====
 const pizzas={
   basiques:[
-    {name:'La Fromage',price:'7,70 €',desc:'Sauce tomate (tomates 100% italiennes), olives, mozzarella, emmental fondu. Pizza de 33cm et 6,60€ pour 29cm.'},
-    {name:'La Jambon',price:'9,90 €',desc:'Sauce tomate, olives, jambon supérieur (100% porc français), mozzarella. 33cm et 8,60€ pour 29cm.'},
-    {name:'La Provençale',price:'8,90 €',desc:'Sauce tomate, olives, tomates cerises, persillade, herbes de Provence, mozzarella. 33cm et 7,50€ (29cm).'},
-    {name:'La Reine',price:'11,50 €',desc:'Sauce tomate, olives, jambon supérieur (100% porc français), champignons, mozzarella. 33cm et 9,50€ (29cm).'}
+    {name:'La Fromage',price:'7,70 €',desc:'Sauce tomate (tomates 100% italiennes), olives, mozzarella, emmental fondu. Pizza de 33cm et 6,60€ pour une pizza de 29cm.'},
+    {name:'La Provençale',price:'8,90 €',desc:'Sauce tomate (tomates 100% italiennes), olives, tomates cerises, persillade, herbes de Provence, mozzarella. Pizza de 33cm et 7,50€ pour une pizza de 29cm.'},
+    {name:'La Jambon',price:'9,90 €',desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), mozzarella. Pizza de 33cm et 8,60€ pour une pizza de 29cm.'},
+    {name:'La Reine',price:'11,50 €',desc:'Sauce tomate (tomates 100% italiennes), olives, jambon supérieur (100% porc français), champignons, mozzarella. Pizza de 33cm et 9,50€ pour une pizza de 29cm.'}
   ],
   classiques:[], gourmandes:[], speciales:[], autres:[]
 };
@@ -284,14 +309,21 @@ document.querySelectorAll('.faq-item').forEach(it=>it.addEventListener('click',(
   window.addEventListener('resize',apply);
   apply();
 
-  // ===== Smooth anchors (douce) =====
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el)return; e.preventDefault(); window.scrollTo({top:el.offsetTop-64,behavior:'smooth'});}));
+  // ===== Smooth anchors (plus doux) =====
+function smoothScrollTo(targetY, duration=1100){
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  const start = performance.now();
+  function ease(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function step(now){
+    const t = Math.min(1, (now-start)/duration);
+    window.scrollTo(0, startY + diff*ease(t));
+    if(t<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
 
-  // ===== Onglets carte (état actif + rendu) =====
-  const dataExists = window.pizzas !== undefined; // si déjà défini on réutilise
-  const pizzas = window.pizzas || { basiques:[{name:'La Fromage',price:'7,70 €',desc:'Sauce tomate (tomates 100% italiennes), olives, mozzarella, emmental fondu. Pizza de 33cm et 6,60€ pour 29cm.'},{name:'La Jambon',price:'9,90 €',desc:'Sauce tomate, olives, jambon supérieur (100% porc français), mozzarella. 33cm et 8,60€ pour 29cm.'},{name:'La Provençale',price:'8,90 €',desc:'Sauce tomate, olives, tomates cerises, persillade, herbes de Provence, mozzarella. 33cm et 7,50€ (29cm).'},{name:'La Reine',price:'11,50 €',desc:'Sauce tomate, olives, jambon supérieur (100% porc français), champignons, mozzarella. 33cm et 9,50€ (29cm).'}], classiques:[], gourmandes:[], speciales:[], autres:[] };
-  const grid=document.getElementById('pizza-grid');
-  function render(cat){ if(!grid) return; grid.innerHTML=''; (pizzas[cat]||[]).forEach(p=>{const d=document.createElement('div'); d.className='pizza'; d.innerHTML=`<h3>${p.name}<span class="price">${p.price}</span></h3><p>${p.desc}</p><div class='hr'></div>`; grid.appendChild(d);}); }
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(!el)return; e.preventDefault(); smoothScrollTo(el.offsetTop-72,1100);})); }
   render('basiques');
   document.addEventListener('click',e=>{const tab=e.target.closest('.tab'); if(!tab) return; document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');}); tab.classList.add('active'); tab.setAttribute('aria-selected','true'); render(tab.dataset.cat);});
 

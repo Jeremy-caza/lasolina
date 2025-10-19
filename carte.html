@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>La Solina — Nos Distributeurs</title>
+<meta name="description" content="Trouvez nos distributeurs à Tarbes et Séméac. Itinéraire en un clic." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700;900&family=Open+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+:root{--c-deep:#122432;--c-hero:#d1f3ff;--white:#fff;--accent:#0e2e42;--radius:16px;--container:1200px;--h2:clamp(28px,4.2vw,72px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--c-deep);color:var(--white);font-family:'Open Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+img{max-width:100%;display:block}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px}
+/* Header : toujours sombre ici */
+.site-header{position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;z-index:1000;background:var(--c-deep);box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:36px}
+nav{margin-left:auto;display:flex;gap:20px;align-items:center}
+nav a{color:#fff;text-decoration:none;font-weight:800;letter-spacing:.02em;opacity:.92;transition:.2s ease}
+nav a:hover{opacity:1}
+nav .active{opacity:1;border-bottom:2px solid var(--c-hero)}
+/* Page head */
+.page-head{padding:120px 0 24px}
+.page-head h1{font-family:'Antonio',system-ui,sans-serif;font-weight:900;margin:0;color:#e3f3ff;font-size:clamp(32px,5vw,72px);letter-spacing:.02em}
+.lead{opacity:.9;margin-top:8px}
+/* Map */
+.map-wrap{padding:18px 0 36px}
+#map{height:62vh;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.map-legend{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.badge{background:#0e2e42;color:#fff;padding:10px 14px;border-radius:999px;font-weight:800;display:inline-flex;align-items:center;gap:8px}
+.route-bar{display:grid;place-items:center;margin:28px 0 10px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:#0e2e42;color:#fff;border:2px solid #000;border-radius:999px;padding:14px 22px;font-weight:800;text-decoration:none;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.btn[disabled]{opacity:.6;pointer-events:none}
+/* Contact section reprise */
+#contact{background:transparent;color:#fff;padding:90px 0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:center}
+.contact-grid h2{grid-column:1/-1;text-align:center;margin:0 0 12px 0;font-family:'Antonio',system-ui,sans-serif;font-size:var(--h2);color:#e3f3ff}
+.contact-bar{display:grid;grid-template-columns:1fr;gap:12px;margin:10px 0 30px;justify-items:center}
+.contact-bar a{color:#fff;text-decoration:underline;font-family:'Antonio',system-ui,sans-serif;font-weight:700;font-size:clamp(18px,2.2vw,24px);text-align:center;display:block}
+.brand-center{display:grid;place-items:center}
+.socials{display:flex;gap:12px;justify-content:flex-end}
+.socials a{width:44px;height:44px;border-radius:10px;background:transparent;display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900;border:none}
+.footer-small{margin-top:36px;text-align:center;opacity:.9}
+.footer-small a{color:#fff}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}.socials{justify-content:center}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container brand">
+    <!-- même duo de logos, mais ici on laisse le "dark" affiché par défaut pour fond sombre -->
+    <a href="./#hero" class="brand-home" aria-label="Retour à l’accueil">
+      <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina" />
+    </a>
+    <nav>
+      <a href="./#hero">Accueil</a>
+      <a href="./#s1">Les pizzas</a>
+      <a href="./#carte">Carte</a>
+      <a href="./#faq">Questions</a>
+      <a href="./#contact">Contact</a>
+      <a class="active" href="carte.html" aria-current="page">Nos Distributeurs</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="page-head">
+    <h1>Nos Distributeurs</h1>
+    <p class="lead">Retrouvez nos points de vente sur la carte. De nouveaux emplacements arrivent.</p>
+  </div>
+
+  <section class="map-wrap">
+    <div id="map" role="region" aria-label="Carte des distributeurs"></div>
+    <div class="map-legend">
+      <span class="badge">• Tarbes — 15 Bis Bd du Gal de Lattre de Tassigny</span>
+      <span class="badge">• Séméac — 111 Avenue des Sports</span>
+    </div>
+    <div class="route-bar">
+      <a id="routeBtn" class="btn" href="#" target="_blank" rel="noopener" disabled>Itinéraire ➜</a>
+    </div>
+  </section>
+</main>
+
+<!-- Section Contact (identique à la page principale) -->
+<section id="contact">
+  <div class="container contact-grid">
+    <h2>NOUS CONTACTER</h2>
+    <div class="contact-bar">
+      <a href="./#carte">Découvrir la carte</a>
+      <a href="tel:+33562517017">Prendre contact</a>
+    </div>
+    <div class="brand-center">
+      <img src="images/logo-dark.jpeg" alt="La Solina" style="max-width:260px;opacity:.95" />
+    </div>
+    <div class="socials">
+      <a aria-label="Instagram" href="https://www.instagram.com/lasolina_pizzas/" target="_blank" rel="noopener">IG</a>
+      <a aria-label="Facebook" href="https://www.facebook.com/lasolina.pizzas/" target="_blank" rel="noopener">f</a>
+      <a aria-label="YouTube" href="#" target="_blank" rel="noopener">▶</a>
+    </div>
+    <div class="footer-small" style="grid-column:1/-1">
+      <a href="#" target="_blank" rel="noopener">mentions</a> — <a href="#" target="_blank" rel="noopener">CGU</a><br/>
+      <a href="https://cazacomm.fr" target="_blank" rel="noopener">2025 Caza Comm</a>
+    </div>
+  </div>
+</section>
+
+<script>
+// --- Leaflet map simple avec 2 marqueurs
+const map = L.map('map',{scrollWheelZoom:false}).setView([43.232, 0.073], 12); // centre sur Tarbes
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; OpenStreetMap'}).addTo(map);
+
+// Coordonnées approximatives (à affiner si besoin)
+const spots = [
+  {name:'Tarbes — 15 Bis Bd du Gal de Lattre de Tassigny', lat:43.2362, lng:0.0718, address:'15 Bis Boulevard du Général de Lattre de Tassigny, 65000 Tarbes'},
+  {name:'Séméac — 111 Avenue des Sports', lat:43.2247, lng:0.1093, address:'111 Avenue des Sports, 65600 Séméac'}
+];
+
+const routeBtn = document.getElementById('routeBtn');
+let selected = null;
+
+spots.forEach(s => {
+  const m = L.marker([s.lat, s.lng]).addTo(map);
+  m.bindPopup(`<strong>${s.name}</strong><br>${s.address}<br><small>Cliquez pour définir la destination</small>`);
+  m.on('click', () => {
+    selected = s;
+    // Lien Google Maps Directions — la position de départ sera la position de l'utilisateur si autorisée
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}&travelmode=driving`;
+    routeBtn.href = url;
+    routeBtn.removeAttribute('disabled');
+  });
+});
+
+// Si aucun marqueur cliqué, on désactive le bouton
+routeBtn.addEventListener('click', e => { if(!selected){ e.preventDefault(); } });
+</script>
+</body>
+</html>

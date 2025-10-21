@@ -18,11 +18,14 @@
 <style>
 :root{--c-hero:#d1f3ff;--c-text:#000;--c-deep:#122432;--c-accent:#0e2e42;--c-red:#c0272d;--c-red2:#db4f4c;--c-white:#fff;--container:1200px;--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.15);--transition:.3s ease;--h1:clamp(28px,5.6vw,92px);--h2:clamp(28px,4.2vw,72px);--h3:clamp(18px,2vw,28px)}
 :root{--ff-title:'Antonio',system-ui,sans-serif;--ff-body:'Open Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;--ff-btn:'Space Grotesk','Antonio',system-ui,sans-serif;--ff-price:'Space Grotesk','Antonio',sans-serif;--ff-pizza:'League Spartan','Antonio',sans-serif}
-*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:#f3f6f8;color:var(--c-text);font-family:var(--ff-body);line-height:1.4}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#f3f6f8;color:var(--c-text);font-family:var(--ff-body);line-height:1.4}
 img{max-width:100%;display:block}
 html,body{overflow-x:hidden}
+html{scroll-behavior:smooth} /* << Smooth natif et fiable */
 .container{max-width:var(--container);margin:0 auto;padding:0 24px}
-section{position:relative;scroll-margin-top:84px}
+section{position:relative;scroll-margin-top:84px} /* offset pour le header */
 
 /* Header */
 .site-header{position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;z-index:1000;transition:var(--transition);background:transparent}
@@ -160,7 +163,7 @@ nav a:hover{opacity:1}
 
 /* Accessibilité */
 @media (prefers-reduced-motion:reduce){
-  html:focus-within{scroll-behavior:auto}
+  html{scroll-behavior:auto}
   .s2-photo{background-attachment:scroll}
 }
 
@@ -289,11 +292,9 @@ nav a:hover{opacity:1}
 </main>
 
 <script>
-(()=>{
-  // ===== Header sombre à mi-HERO + swap logo =====
+(()=>{ /* Header sombre à mi-HERO + swap logo */
   const header = document.querySelector('.site-header');
   const hero   = document.getElementById('hero');
-  const headerHeight = () => header ? header.offsetHeight : 72;
   const midHero = () => (hero ? hero.offsetHeight : window.innerHeight) * 0.5;
   const applyHeader = () => {
     if (window.scrollY > midHero()) header.classList.add('scrolled');
@@ -302,40 +303,36 @@ nav a:hover{opacity:1}
   window.addEventListener('scroll', applyHeader, { passive: true });
   window.addEventListener('resize', applyHeader);
   applyHeader();
+})();
+</script>
 
-  // ===== Smooth anchors (~1100ms, easing) — robuste & universel =====
-  function smoothScrollTo(targetY, duration = 1100) {
-    const startY = window.scrollY;
-    const diff   = targetY - startY;
-    const start  = performance.now();
-    const ease   = t => (t < .5 ? 2*t*t : -1 + (4 - 2*t) * t);
-    const step   = now => {
-      const t = Math.min(1, (now - start) / duration);
-      window.scrollTo(0, startY + diff * ease(t));
-      if (t < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
+<script>
+/* ===== Burger (mobile) ===== */
+(function(){
+  const burger = document.querySelector('.burger');
+  const siteHeader = document.querySelector('.site-header');
+  const siteNav = document.getElementById('site-nav');
+  if (burger && siteHeader && siteNav){
+    const closeMenu = ()=>{ burger.setAttribute('aria-expanded','false'); siteHeader.classList.remove('open'); };
+    const openMenu  = ()=>{ burger.setAttribute('aria-expanded','true');  siteHeader.classList.add('open'); };
+    burger.addEventListener('click', ()=>{
+      siteHeader.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    document.addEventListener('click', (e)=>{
+      if (!siteHeader.classList.contains('open')) return;
+      if (e.target.closest('.burger') || e.target.closest('#site-nav')) return;
+      closeMenu();
+    });
+    window.addEventListener('resize', ()=>{ if (window.innerWidth>768) closeMenu(); });
+    document.querySelectorAll('#site-nav a').forEach(a=>a.addEventListener('click', closeMenu));
   }
+})();
+</script>
 
-  // N’intercepter que les ancres qui pointent vers un ID existant
-  document.addEventListener('click', (e)=>{
-    const link = e.target.closest('a[href^="#"]');
-    if (!link) return;
-    const hash = link.getAttribute('href');
-    const id = hash.slice(1);
-    if (!id) return; // href="#" => on laisse faire
-    const target = document.getElementById(id);
-    if (!target) return; // si pas d’élément => lien normal
-    e.preventDefault();
-    const y = target.getBoundingClientRect().top + window.scrollY - headerHeight();
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      window.scrollTo({ top: y });
-    } else {
-      smoothScrollTo(y, 1100);
-    }
-  });
+<script>
+/* ===== Carte (onglets) + FAQ ===== */
+(()=>{
 
-  // ===== Données + rendu CARTE (onglets) =====
   const pizzas = {
     basiques: [
       {name:'La Fromage',    price:'7,70 €',  desc:'Sauce tomate (tomates 100% italiennes), olives, mozzarella, emmental fondu. Pizza de 33cm et 6,60€ pour une pizza de 29cm.'},
@@ -418,7 +415,6 @@ nav a:hover{opacity:1}
   };
   render('basiques');
 
-  // Tabs (clic & clavier)
   document.addEventListener('click', e => {
     const btn = e.target.closest('.tab');
     if (!btn) return;
@@ -436,7 +432,6 @@ nav a:hover{opacity:1}
     });
   });
 
-  // ===== FAQ plein cadre + bouton Retour =====
   const faqArea  = document.querySelector('.faq-area');
   const faqPanel = document.getElementById('faq-panel');
   const faqText  = {
@@ -462,28 +457,6 @@ nav a:hover{opacity:1}
     faqPanel.addEventListener('click', e => {
       if (e.target.closest('.faq-back')) closeFaq();
     });
-  }
-})();
-</script>
-<script>
-// ===== Burger (mobile) =====
-(function(){
-  const burger = document.querySelector('.burger');
-  const siteHeader = document.querySelector('.site-header');
-  const siteNav = document.getElementById('site-nav');
-  if (burger && siteHeader && siteNav){
-    const closeMenu = ()=>{ burger.setAttribute('aria-expanded','false'); siteHeader.classList.remove('open'); };
-    const openMenu  = ()=>{ burger.setAttribute('aria-expanded','true');  siteHeader.classList.add('open'); };
-    burger.addEventListener('click', ()=>{
-      siteHeader.classList.contains('open') ? closeMenu() : openMenu();
-    });
-    document.addEventListener('click', (e)=>{
-      if (!siteHeader.classList.contains('open')) return;
-      if (e.target.closest('.burger') || e.target.closest('#site-nav')) return;
-      closeMenu();
-    });
-    window.addEventListener('resize', ()=>{ if (window.innerWidth>768) closeMenu(); });
-    document.querySelectorAll('#site-nav a').forEach(a=>a.addEventListener('click', closeMenu));
   }
 })();
 </script>

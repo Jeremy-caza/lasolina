@@ -44,38 +44,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700;900&family=Open+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&family=League+Spartan:wght@600;700&display=swap" rel="stylesheet">
 
 <!-- ========== Données structurées (SEO local) ========== -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "PizzaRestaurant",
-    "name": "La Solina",
-    "url": "https://www.lasolinapizza.fr/",             /* TODO */
-    "image": "https://www.lasolinapizza.fr/images/og-cover.jpg", /* TODO */
-    "telephone": "+33 5 00 00 00 00",                /* TODO */
-    "priceRange": "€€",
-    "servesCuisine": "Pizza",
-    "menu": "https://www.lasolinapizza.fr/#carte",      /* TODO si autre URL */
-    "sameAs": [
-      "https://www.instagram.com/lasolina_pizzas/",        /* TODO */
-      "https://www.facebook.com/lasolina.pizzas",
-      "https://maps.app.goo.gl/qmqQyhgutJgvcadF7"    /* URL de la fiche Google si dispo */
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "15bis Bd du Général de Lattre de Tassigny",              /* TODO */
-      "addressLocality": "Tarbes",
-      "postalCode": "65000",
-      "addressCountry": "FR"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 43.22874973462027                     /* TODO lat exacte */
-      "longitude": 0.05697422534206887                              /* TODO lng exacte */
-    },
-    "hasDelivery": true,
-    "acceptsReservations": false
-  }
-  </script>
+ <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PizzaRestaurant",
+  "@id": "https://www.lasolinapizza.fr/#restaurant",
+  "name": "La Solina",
+  "url": "https://www.lasolinapizza.fr/",
+  "image": "https://www.lasolinapizza.fr/images/og-cover.jpg",
+  "telephone": "+33500000000",
+  "priceRange": "€€",
+  "servesCuisine": ["Pizza","Italien"],
+  "menu": "https://www.lasolinapizza.fr/#carte",
+  "sameAs": [
+    "https://www.instagram.com/lasolina_pizzas/",
+    "https://www.facebook.com/lasolina.pizzas",
+    "https://maps.app.goo.gl/qmqQyhgutJgvcadF7"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "15bis Bd du Général de Lattre de Tassigny",
+    "addressLocality": "Tarbes",
+    "postalCode": "65000",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 43.22874973462027,
+    "longitude": 0.05697422534206887
+  },
+
+  /* --- OUVERT 24/7 --- */
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  ],
+  "openingHours": "Mo-Su 00:00-23:59",
+
+  "hasDelivery": true,
+  "acceptsReservations": false,
+  "hasMap": "https://maps.app.goo.gl/qmqQyhgutJgvcadF7"
+}
+</script>
   
   <style>
 :root{--c-hero:#d1f3ff;--c-text:#000;--c-deep:#122432;--c-accent:#0e2e42;--c-red:#c0272d;--c-red2:#db4f4c;--c-white:#fff;--container:1200px;--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.15);--transition:.3s ease;--h1:clamp(28px,5.6vw,92px);--h2:clamp(28px,4.2vw,72px);--h3:clamp(18px,2vw,28px)}

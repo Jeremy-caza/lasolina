@@ -23,7 +23,7 @@
 img{max-width:100%;display:block}
 html,body{overflow-x:hidden}
 .container{max-width:var(--container);margin:0 auto;padding:0 24px}
-section{position:relative}
+section{position:relative;scroll-margin-top:84px}
 /* Header */
 .site-header{position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;z-index:1000;transition:var(--transition);background:transparent}
 .site-header.scrolled{background:var(--c-deep);box-shadow:var(--shadow)}
@@ -60,26 +60,27 @@ nav a:hover{opacity:1}
 .hero-right{min-height:92vh;background-image:url('images/photohero.jpeg');background-size:cover;background-position:center;background-attachment:scroll}
 /* Section 1 */
 #s1{display:grid;grid-template-columns:1fr 1fr}
-.s1-img{background-image:url('images/photosection1.jpg');background-size:cover;background-position:center;background-attachment:fixed;min-height:90vh}
+.s1-img{background-image:url('images/section1desk.jpg');background-size:cover;background-position:center;background-attachment:fixed;min-height:90vh}
 .underline{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:3px}
 .s1-text{background:var(--c-hero);padding:80px 6vw;display:flex;flex-direction:column;justify-content:center}
-.s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.2;margin:0 0 28px 0;color:#000} #s1 .btn{align-self:flex-end;} 
+.s1-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.2;margin:0 0 28px 0;color:#000}
+#s1 .btn{align-self:flex-start}
 /* Section 2 */
 #s2{background:var(--c-deep);color:var(--c-white)}
-.s2-bar{padding:36px 6vw;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:24px;min-height:180px} 
-.s2-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.12;margin:0} 
+.s2-bar{padding:36px 6vw;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:24px;min-height:180px}
+.s2-title{font-family:var(--ff-title);font-size:var(--h2);font-weight:900;line-height:1.12;margin:0}
 .s2-title .frais{color:var(--c-hero)}
 .s2-cta{justify-self:end}
 .s2-arrow{width:64px;height:24px;display:inline-block}
 @keyframes wiggle{0%,100%{transform:translateX(0)}50%{transform:translateX(10px)}}
-.s2-photo{height:72vh;background-image:url('images/photosection2.jpg');background-size:cover;background-position:center;background-attachment:fixed}
+.s2-photo{height:72vh;background-image:url('images/photosection2.jpg');background-size:cover;background-position:center;background-attachment:fixed;will-change:transform}
 /* Section 3 — Carte */
-#carte{background:var(--c-deep);color:var(--c-white);padding:100px 0;position:relative;z-index:2} 
+#carte{background:var(--c-deep);color:var(--c-white);padding:100px 0;position:relative;z-index:2}
 .carte-head{display:flex;align-items:center;gap:24px;margin-bottom:36px}
 .carte-head h2{font-family:var(--ff-title);font-size:var(--h2);margin:0;color:#e3f3ff}
 .carte-head .call{margin-left:auto}
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;margin:28px 0 14px 0}  
-.tab{padding:16px 22px;border-radius:12px;background:#d1f3ff;color:#0e2e42;font-weight:900;border:2px solid transparent;cursor:pointer;user-select:none;font-family:var(--ff-btn);text-align:center;font-size:clamp(16px,1.6vw,20px);box-shadow:0 4px 0 rgba(0,0,0,.2)}  
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;margin:28px 0 14px 0}
+.tab{padding:16px 22px;border-radius:12px;background:#d1f3ff;color:#0e2e42;font-weight:900;border:2px solid transparent;cursor:pointer;user-select:none;font-family:var(--ff-btn);text-align:center;font-size:clamp(16px,1.6vw,20px);box-shadow:0 4px 0 rgba(0,0,0,.2)}
 .tab.active{background:transparent;color:#fff;border-color:var(--c-red);box-shadow:0 0 0 rgba(0,0,0,0)}
 .carte-viewport{height:520px;border-top:1px solid #fff2;border-bottom:1px solid #fff2;overflow:auto;padding:12px 2px}
 .pizza-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;padding:18px 2px}
@@ -101,13 +102,13 @@ nav a:hover{opacity:1}
 .faq-panel{position:absolute;inset:0;display:none;padding:28px;background:rgba(14,46,66,.92)}
 .faq-area.open .faq-list{visibility:hidden}
 .faq-area.open .faq-panel{display:block}
-.faq-back{position:absolute;top:12px;right:12px} 
+.faq-back{position:absolute;top:12px;right:12px}
 /* Section 5 — Contact */
 #contact{background:var(--c-deep);color:#fff;padding:90px 0}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:center}
 .contact-grid h2{grid-column:1/-1;text-align:center;margin:0 0 12px 0;font-family:var(--ff-title);font-size:var(--h2);color:#e3f3ff}
 .contact-bar{display:grid;grid-template-columns:1fr;gap:12px;margin:10px 0 30px;justify-items:center}
-.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;font-size:clamp(18px,2.2vw,24px);text-align:center;display:block} 
+.contact-bar a{color:#fff;text-decoration:underline;font-family:var(--ff-title);font-weight:700;font-size:clamp(18px,2.2vw,24px);text-align:center;display:block}
 .brand-center{display:grid;place-items:center}
 .socials{display:flex;gap:12px;justify-content:flex-end}
 .socials a{width:44px;height:44px;border-radius:10px;background:transparent;display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900;border:none}
@@ -115,17 +116,48 @@ nav a:hover{opacity:1}
 .footer-small{margin-top:36px;text-align:center;opacity:.9}
 .footer-small a{color:#fff}
 /* Responsive */
-@media (max-width:1100px){#hero{grid-template-columns:1fr} .hero-right{display:none} .s1-img{min-height:60vh;background-attachment:scroll} .s2-photo{background-attachment:scroll;height:50vh} .s2-bar{grid-template-columns:1fr;gap:12px} .pizza-grid{grid-template-columns:1fr} .contact-bar{grid-template-columns:1fr}}
-@media (max-width:720px){.site-header{height:64px} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}
+@media (max-width:1100px){
+  #hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .s1-img{min-height:60vh;background-attachment:scroll}
+  .s2-photo{background-attachment:scroll;height:50vh}
+  .s2-bar{grid-template-columns:1fr;gap:12px}
+  .pizza-grid{grid-template-columns:1fr}
+  .contact-bar{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .site-header{height:64px}
+  .brand img{height:30px}
+  nav{gap:14px}
+  nav a{font-size:14px}
+  .hero-left{padding:110px 24px 48px}
+  .btn{padding:12px 18px}
+  .s1-text{padding:48px 24px}
+  .carte-viewport{height:460px}
+  .faq-list,.faq-panel{height:440px}
+  .contact-grid{grid-template-columns:1fr;gap:10px}
+  .socials{justify-content:center}
   .hero-title{font-size:clamp(44px,9.5vw,72px)}
   /* montrer l'image héros sous le titre en mobile */
   .hero-right{display:block;min-height:40vh}
   /* onglets pizza: 2 par ligne */
   .tabs{grid-template-columns:repeat(2,1fr);gap:14px}
-} .brand img{height:30px} nav{gap:14px} nav a{font-size:14px} .hero-left{padding:110px 24px 48px} .btn{padding:12px 18px} .s1-text{padding:48px 24px} .carte-viewport{height:460px} .faq-list,.faq-panel{height:440px} .contact-grid{grid-template-columns:1fr;gap:10px} .socials{justify-content:center}}
+  /* SECTION 1 mobile: image différente + layout empilé */
+  #s1{grid-template-columns:1fr}
+  .s1-img{order:-1;background-image:url('images/section1mobile.jpg');min-height:48vh}
+  /* SECTION 2 mobile: option image dédiée (si fournie) */
+  .s2-photo{background-image:url('images/section2mobile.jpg');height:64vh}
+  /* SECTION 4 mobile: image dédiée + pas de fixed */
+  #faq{background:var(--c-deep) url('images/faq-bg-mobile.jpg') center/cover no-repeat}
+}
+/* Accessibilité/UX */
+@media (prefers-reduced-motion:reduce){
+  html:focus-within{scroll-behavior:auto}
+  .s2-photo{background-attachment:scroll}
+}
 /* Amélioration FAQ : texte plein cadre et justifié */
-.faq-panel p{max-width:none;text-align:justify;font-family:var(--ff-body);} 
-.faq-panel .answer{max-width:none;width:100%;margin-top:56px} 
+.faq-panel p{max-width:none;text-align:justify;font-family:var(--ff-body)}
+.faq-panel .answer{max-width:none;width:100%;margin-top:56px}
 /* override d'un style inline existant */
 .faq-panel div[style*="max-width:70ch"]{max-width:none !important}
 </style>
@@ -133,17 +165,19 @@ nav a:hover{opacity:1}
 <body>
 <header class="site-header" id="top">
   <div class="container brand">
-    <a href="#hero" class="brand-home" aria-label="Retour à l’accueil"><img class="logo-light" src="images/logo-light.png" alt="La Solina"/>
-    <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina"/></a>
+    <a href="#hero" class="brand-home" aria-label="Retour à l’accueil">
+      <img class="logo-light" src="images/logo-light.png" alt="La Solina"/>
+      <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina"/>
+    </a>
     <nav id="site-nav">
       <a href="#hero">Accueil</a>
       <a href="#s1">Les pizzas</a>
       <a href="#carte">Carte</a>
       <a href="#faq">Questions</a>
       <a href="#contact">Contact</a>
-          <a href="carte.html">Nos Distributeurs</a>
-</nav>
-      <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <a href="carte.html">Nos Distributeurs</a>
+    </nav>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -251,7 +285,7 @@ nav a:hover{opacity:1}
   // ===== Header sombre à mi-HERO + swap logo =====
   const header = document.querySelector('.site-header');
   const hero   = document.getElementById('hero');
-  const HEADER_H = 72;
+  const headerHeight = () => header?.offsetHeight || 72;
   const midHero = () => (hero ? hero.offsetHeight : window.innerHeight) * 0.5;
   const applyHeader = () => {
     if (window.scrollY > midHero()) header.classList.add('scrolled');
@@ -261,7 +295,7 @@ nav a:hover{opacity:1}
   window.addEventListener('resize', applyHeader);
   applyHeader();
 
-  // ===== Smooth anchors (plus doux ~1100ms, easing) =====
+  // ===== Smooth anchors (~1100ms, easing) =====
   function smoothScrollTo(targetY, duration = 1100) {
     const startY = window.scrollY;
     const diff   = targetY - startY;
@@ -278,10 +312,15 @@ nav a:hover{opacity:1}
     a.addEventListener('click', e => {
       const id = a.getAttribute('href').slice(1);
       const el = document.getElementById(id);
-      if (!el) return;
+      if (!el) return; // laissons les liens externes fonctionner
       e.preventDefault();
-      const y = el.getBoundingClientRect().top + window.scrollY - HEADER_H;
-      smoothScrollTo(y, 1100);
+      const y = el.getBoundingClientRect().top + window.scrollY - headerHeight();
+      // respect reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        window.scrollTo({ top: y, behavior: 'auto' });
+      } else {
+        smoothScrollTo(y, 1100);
+      }
     });
   });
 
@@ -413,6 +452,25 @@ nav a:hover{opacity:1}
       if (e.target.closest('.faq-back')) closeFaq();
     });
   }
+
+  // ===== Parallaxe mobile douce pour .s2-photo (si support) =====
+  const s2 = document.querySelector('.s2-photo');
+  const isMobile = () => window.matchMedia('(max-width: 720px)').matches;
+  const pr = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let lastY = -9999;
+  function parallax(){
+    if (!s2 || !isMobile() || pr.matches) return;
+    const rect = s2.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!inView) return;
+    const offset = rect.top * -0.15; // facteur doux
+    if (Math.abs(offset - lastY) > 0.5) {
+      s2.style.transform = `translateY(${offset}px)`;
+      lastY = offset;
+    }
+  }
+  window.addEventListener('scroll', parallax, {passive:true});
+  window.addEventListener('resize', ()=>{ s2 && (s2.style.transform = ''); });
 })();
 </script>
 <script>

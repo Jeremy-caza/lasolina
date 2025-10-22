@@ -97,6 +97,9 @@
   <style>
 :root{--c-hero:#d1f3ff;--c-text:#000;--c-deep:#122432;--c-accent:#0e2e42;--c-red:#c0272d;--c-red2:#db4f4c;--c-white:#fff;--container:1200px;--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.15);--transition:.3s ease;--h1:clamp(28px,5.6vw,92px);--h2:clamp(28px,4.2vw,72px);--h3:clamp(18px,2vw,28px)}
 :root{--ff-title:'Antonio',system-ui,sans-serif;--ff-body:'Open Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;--ff-btn:'Space Grotesk','Antonio',system-ui,sans-serif;--ff-price:'Space Grotesk','Antonio',sans-serif;--ff-pizza:'League Spartan','Antonio',sans-serif}
+/* === ajout variable azur foncé pour le header scrolled === */
+:root{--c-azur:#0a3d62;} /* ajuste si besoin */
+
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:#f3f6f8;color:var(--c-text);font-family:var(--ff-body);line-height:1.4}
@@ -108,7 +111,7 @@ section{position:relative;scroll-margin-top:84px} /* offset pour le header */
 
 /* Header */
 .site-header{position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;z-index:1000;transition:var(--transition);background:transparent}
-.site-header.scrolled{background:var(--c-deep);box-shadow:var(--shadow)}
+.site-header.scrolled{background:var(--c-azur);box-shadow:var(--shadow)} /* fond azur à mi-HERO */
 .brand{display:flex;align-items:center;gap:12px;position:relative;width:100%}
 .brand img{height:36px}
 .brand-home{display:flex;align-items:center;gap:12px;margin:0 auto}
@@ -116,7 +119,7 @@ nav{margin-left:auto;display:flex;gap:20px;align-items:center}
 nav a{color:var(--c-white);text-decoration:none;font-weight:700;letter-spacing:.02em;opacity:.92;transition:var(--transition);font-family:var(--ff-btn)}
 nav a:hover{opacity:1}
 
-/* Logo swap */
+/* Logo swap (on garde la logique, mais même visuel avant/après) */
 .logo-dark{display:none}
 .site-header.scrolled .logo-light{display:none}
 .site-header.scrolled .logo-dark{display:block}
@@ -134,7 +137,7 @@ nav a:hover{opacity:1}
 }
 
 /* Hero */
-#hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr}
+#hero{position:relative; /* pour le sentinel */ min-height:92vh;display:grid;grid-template-columns:1fr 1fr}
 .hero-left{background:var(--c-hero);padding:120px 8vw 80px;display:flex;flex-direction:column;justify-content:center}
 .hero-title{font-family:var(--ff-title);font-weight:900;letter-spacing:.02em;line-height:1.2;margin:0 0 24px 0;font-size:var(--h1);color:#000}
 .hero-cta{display:flex;align-items:center;gap:16px;margin-top:24px}
@@ -256,8 +259,9 @@ nav a:hover{opacity:1}
 <header class="site-header" id="top">
   <div class="container brand">
     <a href="#hero" class="brand-home" aria-label="Retour à l’accueil">
+      <!-- même logo avant/après -->
       <img class="logo-light" src="images/logo-light.png" alt="La Solina"/>
-      <img class="logo-dark" src="images/logo-dark.jpeg" alt="La Solina"/>
+      <img class="logo-dark"  src="images/logo-light.png" alt="La Solina"/>
     </a>
     <nav id="site-nav">
       <a href="#hero">Accueil</a>
@@ -274,6 +278,9 @@ nav a:hover{opacity:1}
 <main>
   <!-- HERO -->
   <section id="hero">
+    <!-- SENTINEL: seuil à mi-HERO pour déclencher l'état -->
+    <div id="hero-threshold" aria-hidden="true" style="position:absolute;left:0;right:0;top:50%;height:1px;"></div>
+
     <div class="hero-left">
       <h1 class="hero-title">FRAÎCHE, ARTISANALE, PRÉPARÉE POUR VOUS</h1>
       <div class="hero-cta">
@@ -370,18 +377,35 @@ nav a:hover{opacity:1}
   </section>
 </main>
 
+<!-- ===== Header: azur à mi-HERO, desktop only, robuste ===== -->
 <script>
-(()=>{ /* Header sombre à mi-HERO + swap logo */
+(()=>{ 
   const header = document.querySelector('.site-header');
-  const hero   = document.getElementById('hero');
-  const midHero = () => (hero ? hero.offsetHeight : window.innerHeight) * 0.5;
-  const applyHeader = () => {
-    if (window.scrollY > midHero()) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
+  const threshold = document.getElementById('hero-threshold');
+  if (!header || !threshold) return;
+
+  const mq = window.matchMedia('(min-width: 1101px)');
+  let observer = null;
+
+  const connectObserver = ()=>{
+    // cleanup
+    if (observer){ observer.disconnect(); observer = null; }
+    // mobile/tablette: pas d'effet + état réinitialisé
+    if (!mq.matches){ header.classList.remove('scrolled'); return; }
+
+    observer = new IntersectionObserver((entries)=>{
+      const e = entries[0];
+      // quand le seuil sort du viewport -> on a dépassé la moitié du HERO
+      if (!e.isIntersecting) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    }, { root:null, threshold:0 });
+
+    observer.observe(threshold);
   };
-  window.addEventListener('scroll', applyHeader, { passive: true });
-  window.addEventListener('resize', applyHeader);
-  applyHeader();
+
+  mq.addEventListener?.('change', connectObserver);
+  window.addEventListener('resize', connectObserver, { passive:true });
+  connectObserver();
 })();
 </script>
 

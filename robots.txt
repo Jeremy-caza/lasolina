@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lasolinapizza.fr/sitemap.xml

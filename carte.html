@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>La Solina — Nos Distributeurs</title>
-<meta name="description" content="Trouvez nos distributeurs à Tarbes et Séméac. Itinéraire en un clic." />
+<meta name="description" content="Trouvez nos distributeurs à Tarbes, Séméac et Orleix. Itinéraire en un clic." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700;900&family=Open+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -76,7 +76,7 @@ body{overflow-x:hidden}
 }
 /* --- Overlay/stacking fixes so the mobile menu sits above the map & its controls --- */
 @media (max-width: 820px){
-  /* ensure the slide‑down menu is above Leaflet controls */
+  /* ensure the slide-down menu is above Leaflet controls */
   nav{ z-index:2001; }
   /* dim the page under the menu and intercept taps */
   .site-header.open::after{
@@ -116,6 +116,7 @@ body{overflow-x:hidden}
     <div class="map-legend">
       <span class="badge">• Tarbes — 15bis Bd du Général de Lattre de Tassigny, 65000</span>
       <span class="badge">• Séméac — 111 Av. des Sports, 65600</span>
+      <span class="badge">• Orleix — 11 Route de Rabastens, 65800</span>
     </div>
     <div class="route-bar">
       <a id="routeBtn" class="btn" href="#" target="_blank" rel="noopener" disabled>Itinéraire ➜</a>
@@ -147,13 +148,14 @@ body{overflow-x:hidden}
 </section>
 
 <script>
-// --- Leaflet map avec géocodage Nominatim pour placer précisément les 2 adresses
+// --- Leaflet map avec géocodage Nominatim pour placer précisément les 3 adresses
 const map = L.map('map', { scrollWheelZoom:false });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; OpenStreetMap'}).addTo(map);
 
 const addresses = [
   { name: 'Tarbes — 15bis Bd du Général de Lattre de Tassigny', address: '15bis Bd du Général de Lattre de Tassigny, 65000 Tarbes' },
-  { name: 'Séméac — 111 Avenue des Sports', address: '111 Avenue des Sports, 65600 Séméac' }
+  { name: 'Séméac — 111 Avenue des Sports', address: '111 Avenue des Sports, 65600 Séméac' },
+  { name: 'Orleix — 11 Route de Rabastens', address: '11 Route de Rabastens, 65800 Orleix' }
 ];
 
 const routeBtn = document.getElementById('routeBtn');

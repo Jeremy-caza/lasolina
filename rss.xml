@@ -6,12 +6,21 @@
     <atom:link href="https://www.lasolinapizza.fr/rss.xml" rel="self" type="application/rss+xml" />
     <description>Conseils, coulisses et bons plans autour de la pizza artisanale en distributeur à Tarbes et dans les Hautes-Pyrénées.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Mon, 31 Aug 2026 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 09:00:00 +0200</lastBuildDate>
     <image>
       <url>https://www.lasolinapizza.fr/images/logo-dark.jpeg</url>
       <title>Le blog La Solina</title>
       <link>https://www.lasolinapizza.fr/blog/</link>
     </image>
+
+    <item>
+      <title>Réussir votre dîner pizza pour une soirée parfaite</title>
+      <link>https://www.lasolinapizza.fr/blog/soiree-match-soiree-jeux-soiree-film-organiser/</link>
+      <guid isPermaLink="true">https://www.lasolinapizza.fr/blog/soiree-match-soiree-jeux-soiree-film-organiser/</guid>
+      <pubDate>Mon, 07 Sep 2026 09:00:00 +0200</pubDate>
+      <category>Blog</category>
+      <description>Lorsqu'il s'agit de passer une soirée agréable entre amis ou en famille, rien ne vaut une bonne pizza artisanale. Que ce soit pour un match de foot, une soirée jeux ou un marathon de films, La Solina facilite l'organisation d'un dîner sans stress avec ses distributeurs automatiques accessibles 24h/24 à Tarbes et dans le bassin tarbais.</description>
+    </item>
 
     <item>
       <title>Savourez une pizza artisanale à Lourdes et Adé</title>
